@@ -1,7 +1,11 @@
 <script lang="ts" setup></script>
 
 <template>
-  <h1>about</h1>
+  <div>
+    <p>header login</p>
+    <slot />
+    footer login
+  </div>
 </template>
 
 <style scoped></style>

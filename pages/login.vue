@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  layout: "login",
+});
+</script>
 
 <template>
-  <div>Page: login</div>
+  <h1>login</h1>
 </template>
 
 <style scoped></style>
