@@ -1,0 +1,25 @@
+@import "./variables.scss";
+@import "./utilities.scss";
+
+body {
+  box-sizing: border-box !important;
+}
+
+label,
+select,
+p,
+input,
+button,
+span,
+div,
+textarea {
+  font-size: $default-font-size !important;
+}
+
+* {
+  color: $color-titles-and-texts;
+}
+
+p {
+  text-justify: inter-word;
+}
