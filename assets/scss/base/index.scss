@@ -16,7 +16,18 @@ textarea {
   font-size: $default-font-size !important;
 }
 
-* {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+select,
+li,
+label,
+p,
+textarea {
   color: $color-titles-and-texts;
 }
 
