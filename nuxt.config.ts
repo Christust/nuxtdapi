@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  plugins: ["@/plugins/fontawesome.ts", "@/plugins/bootstrap.ts"],
+  plugins: [
+    "@/plugins/fontawesome.ts",
+    { src: "@/plugins/bootstrap.ts", mode: "client" },
+  ],
   devtools: { enabled: true },
   css: [
     "@fortawesome/fontawesome-svg-core/styles.css",
