@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import routesConstants from "@/constants/routesConstants";
+const authStore = useAuthStore()
 
 const routes = ref(routesConstants);
 </script>
@@ -27,7 +28,7 @@ const routes = ref(routesConstants);
         </div>
       </div>
       <div class="sidebar__sidebarRouteContainer">
-        <div class="sidebar__sidebarRoute sidebar__sidebarRoute--button">
+        <div @click="authStore.logout()" class="sidebar__sidebarRoute sidebar__sidebarRoute--button">
           <span>Logout</span>
         </div>
       </div>

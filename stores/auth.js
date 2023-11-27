@@ -12,8 +12,9 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     login(response) {
-      this.token = response.data.access_token
-      this.refresh_token = response.data.refresh_token
+      this.token = response.data.token
+      this.refresh_token = response.data.refresh
+      navigateTo('/')
     },
     logout() {
       // reset store to original state

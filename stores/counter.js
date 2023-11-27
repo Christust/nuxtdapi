@@ -11,12 +11,11 @@ export const useCounterStore = defineStore("counter", {
     },
   },
   actions: {
-    addCounter() {
-      this.counter++;
-    },
-    addCounterNav() {
-      this.counter++;
-      navigateTo("about");
+    setCounter(value) {
+      const newCount = this.counter + value;
+      if (newCount >= 0) {
+        this.counter = newCount;
+      }
     },
   },
   persist: true,
