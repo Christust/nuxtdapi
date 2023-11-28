@@ -1,27 +1,28 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useAuthStore = defineStore('auth', {
+export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: ref(false),
-    refresh_token: ref(false)
+    refresh_token: ref(false),
   }),
   getters: {
     isLoggedIn() {
-      return !!this.token
-    }
+      return !!this.token;
+    },
   },
   actions: {
     login(response) {
-      this.token = response.data.token
-      this.refresh_token = response.data.refresh
-      navigateTo('/')
+      if (response.data?.token) {
+        this.token = response.data.token;
+        this.refresh_token = response.data.refresh;
+      }
+      navigateTo("/");
     },
     logout() {
       // reset store to original state
-      this.$reset()
-      navigateTo('/login')
-    }
+      this.$reset();
+      navigateTo("/login");
+    },
   },
-  persist: true
-})
-
+  persist: true,
+});

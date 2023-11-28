@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import authService from "@/api/factories/auth.js";
+
 definePageMeta({
   layout: "login",
 });
 
-import authService from "~/api/factories/auth";
 const email = ref("");
 const password = ref("");
 const authStore = useAuthStore();
@@ -13,14 +14,9 @@ function login() {
     email: email.value,
     password: password.value,
   };
-  authService.login(payload).then(
-    (res: any) => {
-      authStore.login(res)
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
+  authService.login(payload).then((res: any) => {
+    authStore.login(res);
+  });
 }
 </script>
 

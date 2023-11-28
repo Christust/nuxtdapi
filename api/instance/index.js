@@ -1,5 +1,5 @@
 import axios from "axios";
-// import swal from "sweetalert";
+import swal from "sweetalert";
 import { useCounterStore } from "@/stores/counter";
 import { useAuthStore } from "@/stores/auth";
 
@@ -11,10 +11,8 @@ const instance = axios.create({
 instance.interceptors.request.use((config) => {
   const useAuth = useAuthStore();
   const useCounter = useCounterStore();
-  const token = useAuth.token;
-  console.log(token);
   if (useAuth.isLoggedIn) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${useAuth.token}`;
   }
   useCounter.setCounter(+1);
   return config;
@@ -29,8 +27,12 @@ instance.interceptors.response.use(
   (error) => {
     const useCounter = useCounterStore();
     useCounter.setCounter(-1);
-    console.log(error);
-    swal("Error!");
+    if (error.code == "ERR_NETWORK") {
+      swal({ icon: "error", title: "Error de conexión", text: "No se pudo establecer conexión con el servidor" });
+      return error;
+    } else {
+      swal({ icon: "error", title: "Error", text: error.response.data.error });
+    }
     return error;
   }
 );
