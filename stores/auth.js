@@ -4,6 +4,7 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: ref(false),
     refresh_token: ref(false),
+    current_user: ref({}),
   }),
   getters: {
     isLoggedIn() {
@@ -15,6 +16,7 @@ export const useAuthStore = defineStore("auth", {
       if (response.data?.token) {
         this.token = response.data.token;
         this.refresh_token = response.data.refresh;
+        this.current_user = response.data.user;
       }
       navigateTo("/");
     },

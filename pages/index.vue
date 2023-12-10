@@ -18,11 +18,16 @@ const backendTecnologies = ref([
   "CRUDs completos",
 ]);
 
-const counterStore = useCounterStore();
+const authStore = useAuthStore();
+
+function showAction() {
+  alert("emit");
+}
 </script>
 
 <template>
   <div>
+    {{ authStore.current_user }}
     <!-- Button trigger modal -->
     <button
       type="button"
@@ -34,41 +39,12 @@ const counterStore = useCounterStore();
     </button>
 
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">...</div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    {{ counterStore.counter }}
-    <button @click="counterStore.addCounter()">add</button>
-    <button @click="counterStore.addCounterNav">nav</button>
+    <SharedModal
+      @acceptAction="showAction"
+      :title="'Titulo'"
+      :body="'Cuerpo'"
+      :haveAcceptOption="true"
+    />
     <main>
       <div>
         <p>
