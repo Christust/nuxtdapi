@@ -27,24 +27,6 @@ function showAction() {
 
 <template>
   <div>
-    {{ authStore.current_user }}
-    <!-- Button trigger modal -->
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-    >
-      Launch demo modal
-    </button>
-
-    <!-- Modal -->
-    <SharedModal
-      @acceptAction="showAction"
-      :title="'Titulo'"
-      :body="'Cuerpo'"
-      :haveAcceptOption="true"
-    />
     <main>
       <div>
         <p>
@@ -61,11 +43,8 @@ function showAction() {
                 siguiente:
               </p>
               <ul>
-                <li
-                  v-for="(tecnologie, index) in frontendTecnologies"
-                  :key="tecnologie + index"
-                  v-text="tecnologie"
-                ></li>
+                <li v-for="(tecnologie, index) in frontendTecnologies" :key="tecnologie + index" v-text="tecnologie">
+                </li>
               </ul>
             </div>
           </div>
@@ -78,11 +57,8 @@ function showAction() {
                 siguiente:
               </p>
               <ul>
-                <li
-                  v-for="(tecnologie, index) in backendTecnologies"
-                  :key="tecnologie + index"
-                  v-text="tecnologie"
-                ></li>
+                <li v-for="(tecnologie, index) in backendTecnologies" :key="tecnologie + index" v-text="tecnologie">
+                </li>
               </ul>
             </div>
           </div>

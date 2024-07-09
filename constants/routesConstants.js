@@ -4,19 +4,16 @@ const routes = [
     name: "Home",
     icon: "fa-solid fa-house",
   },
-  // {
-  //   route: "/dashboard",
-  //   name: "Dashboard",
-  //   icon: "fa-solid fa-chart-line",
-  // },
-  // {
-  //   route: "/users",
-  //   name: "Usuarios",
-  // },
-  // {
-  //   route: "/store",
-  //   name: "Inventario",
-  // },
+  {
+    route: "/branch",
+    name: "Branch",
+    icon: "fa-solid fa-house",
+  },
+  {
+    route: "/item",
+    name: "Item",
+    icon: "fa-solid fa-house",
+  },
   {
     route: "/about",
     name: "Contacto",

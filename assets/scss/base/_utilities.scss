@@ -7,18 +7,117 @@
   background-image: linear-gradient($color-primary-light, $color-primary-dark);
   color: $silver-200;
   border: none;
+
   .card-title {
     color: $color-white;
   }
+
   p,
   li {
     color: $silver-200;
   }
 }
 
+.dropdownTableActions.show {
+  button {
+    z-index: 1001;
+  }
+}
+
+.layoutContainer {
+  position: relative;
+}
+
+.clear-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+}
+
+.clear-icon svg {
+  color: #ff6600;
+}
+
+.dropdownTableActions {
+  button {
+    padding: 3px 9px;
+    background-color: transparent !important;
+    border: none;
+    z-index: 1001 !important;
+  }
+
+  ul {
+    box-shadow: 0 4px 12px 0 rgba(131, 129, 129, 0.66) !important;
+    border: none !important;
+    transform: translate3d(-220px, 14px, 0px);
+    color: #6a6e83 !important;
+    font-size: 12px !important;
+    line-height: 14px !important;
+    text-align: right !important;
+    padding: 0.7rem 0 !important;
+    border-radius: 21px !important;
+    min-width: 16rem !important;
+
+    li {
+      margin: 0.6rem 0 0.6rem 0 !important;
+    }
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+}
+
+.arrowTable {
+  position: absolute;
+
+  &__top {
+    top: -4px;
+  }
+
+  &__bottom {
+    bottom: -4px;
+  }
+}
+
+.input-search {
+  border-radius: 8px;
+
+  input {
+    background: white;
+    border: solid 1px $silver-200 !important;
+    transition: none !important;
+  }
+
+  input::placeholder {
+    color: #bfbfbf;
+  }
+
+  input:focus {
+    box-shadow: none !important;
+  }
+
+  span {
+    button {
+      background: #e5ecf3 !important;
+      color: #bfbfbf;
+    }
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
 .patientsHeadClass {
-  background-color: $silver-100;
+  background-color: $silver-200;
   border-radius: 8px 8px;
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.75);
   border-collapse: separate;
   border-spacing: 0 1rem;
   padding: 0 1rem;
@@ -31,42 +130,53 @@
         color: $silver-950 !important;
         padding: 1.5rem 0.5rem;
       }
+
       th:first-child {
-        border-radius: 0 0px 0px 21px;
+        border-radius: 21px 0px 0px 21px;
       }
+
       th:last-child {
         border-radius: 0 21px 21px 0px;
       }
     }
   }
+
   tbody {
     border: 1px solid $color-secondary;
+
     tr {
       padding: 1rem 0.5rem;
     }
+
     td:first-child {
-      border-radius: 0 0px 0px 21px;
+      border-radius: 21px 0px 0px 21px;
     }
+
     td:last-child {
       border-radius: 0 21px 21px 0px;
     }
+
     td {
       text-align: center;
       padding: 1rem 0.5rem;
       align-items: center;
     }
+
     tr:nth-child(odd) {
       background: $color-white !important;
       box-shadow: none;
+
       td {
         vertical-align: middle;
         background: $color-white !important;
         box-shadow: none !important;
       }
     }
+
     tr:nth-child(even) {
       background: $color-white !important;
       box-shadow: none;
+
       td {
         vertical-align: middle;
         background: $color-white !important;
