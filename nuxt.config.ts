@@ -1,5 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // SPA
+  hooks: {
+    "prerender:routes"({ routes }) {
+      routes.clear()
+    }
+  },
+  router: {
+    options: {
+      hashMode: true
+    }
+  },
+  // End SPA
   plugins: [
     { src: "@/plugins/fontawesome.ts", mode: "client" },
     { src: "@/plugins/bootstrap.ts", mode: "client" },
@@ -16,6 +28,7 @@ export default defineNuxtConfig({
   pinia: {
     storesDirs: ["./stores/**", "./custom-folder/stores/**"],
   },
+  // SPA
   ssr: false,
   vite: {
     define: {
