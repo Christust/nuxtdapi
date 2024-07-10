@@ -79,7 +79,7 @@ defineExpose({
                 <form @submit.prevent="destroy(itemData.id)">
                     <div class="row">
                         <div class="d-flex">
-                            <h1>¿Esta seguro de eliminar este item?</h1>
+                            <h5>¿Esta seguro de eliminar este item?</h5>
                         </div>
                         <div class="row mx-0 px-0 justify-content-between align-items-center mt-3">
                             <div class="col-6">

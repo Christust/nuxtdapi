@@ -1,29 +1,28 @@
 <script setup>
-import branchService from '~/api/factories/branch';
-
+import storeService from '~/api/factories/store';
 // Props
 const props = defineProps({
-    branchData: { type: Object, required: false, default: () => { } },
+    storeData: { type: Object, required: false, default: () => { } },
     action: { type: String, required: false, default: 'create' }
 })
-const { branchData } = toRefs(props)
+const { storeData } = toRefs(props)
 
 // Refs
-const branchFormRef = ref(null)
-const branchModalRef = ref(null)
+const storeFormRef = ref(null)
+const storeModalRef = ref(null)
 
 // Emits
-const emit = defineEmits(['reloadBranchs'])
+const emit = defineEmits(['reloadStores'])
 
 // Functions
 const showModal = () => {
-    branchModalRef.value.show()
+    storeModalRef.value.show()
 }
 const hideModal = () => {
-    branchModalRef.value.hide()
+    storeModalRef.value.hide()
 }
 function onShown() {
-    branchFormRef.value.onShown()
+    storeFormRef.value.onShown()
 }
 function actionSubmit(data, id = null) {
     switch (props.action) {
@@ -38,34 +37,27 @@ function actionSubmit(data, id = null) {
     }
 }
 function create(payload) {
-    branchService.create(payload).then((res) => {
-        emit("reloadBranchs")
+    storeService.create(payload).then((res) => {
+        emit("reloadStores")
         hideModal()
     })
 }
 function update(id, payload) {
-    branchService.update(id, payload).then((res) => {
-        emit("reloadBranchs")
+    storeService.update(id, payload).then((res) => {
+        emit("reloadStores")
         hideModal()
     })
 }
 function destroy(id) {
-    branchService.destroy(id).then((res) => {
-        emit("reloadBranchs")
+    storeService.destroy(id).then((res) => {
+        emit("reloadStores")
         hideModal()
     })
 }
 
 // Computed
 const modalTitle = computed(() => {
-    switch (props.action) {
-        case "create":
-            return 'Crear nueva sucursal'
-        case "update":
-            return 'Editar sucursal'
-        case "destroy":
-            return 'Eliminar sucursal'
-    }
+    return props.action === 'create' ? 'Crear nuevo store' : 'Editar store'
 })
 const btnActionLabel = computed(() => {
     return props.action === 'create' ? 'Crear' : 'Actualizar'
@@ -78,19 +70,18 @@ defineExpose({
 })
 </script>
 <template>
-    <SharedGeneralModal ref="branchModalRef" @shown="onShown" :title="modalTitle" size="md" modalContentClass="p-4"
+    <SharedGeneralModal ref="storeModalRef" @shown="onShown" :title="modalTitle" size="md" modalContentClass="p-4"
         hideHeaderClose hideFooter noCloseOnEsc>
         <template #bodyContent>
-            <BranchForm v-if="props.action !== 'destroy'" ref="branchFormRef" :branchData="branchData"
-                :action="props.action" :btnActionLabel="btnActionLabel" @actionSubmit="actionSubmit"
-                @cancelForm="hideModal" />
+            <StoreForm v-if="props.action !== 'destroy'" ref="storeFormRef" :storeData="storeData" :action="props.action"
+                :btnActionLabel="btnActionLabel" @actionSubmit="actionSubmit" @cancelForm="hideModal" />
             <template v-else>
-                <form @submit.prevent="destroy(branchData.id)">
+                <form @submit.prevent="destroy(storeData.id)">
                     <div class="row">
                         <div class="d-flex">
-                            <h5>¿Esta seguro de eliminar esta sucursal?</h5>
+                            <h5>¿Esta seguro de eliminar este almacen?</h5>
                         </div>
-                        <div class="row mx-0 px-0 justify-content-between align-branchs-center mt-3">
+                        <div class="row mx-0 px-0 justify-content-between align-stores-center mt-3">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" @click="hideModal"
                                     data-bs-dismiss="modal">

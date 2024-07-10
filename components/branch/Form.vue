@@ -61,9 +61,11 @@ function onShown() {
     }
     if (action.value !== 'create' && props.branchData) {
         name.value = props.branchData.name
-        country.value = props.branchData.country
-        state.value = props.branchData.state
-        city.value = props.branchData.city
+        country.value = props.branchData.country.id
+        listStates()
+        state.value = props.branchData.state.id
+        listCities()
+        city.value = props.branchData.city.id
     }
 }
 function listCountries() {
@@ -98,6 +100,9 @@ defineExpose({
 </script>
 
 <template>
+    {{ country }}
+    {{ state }}
+    {{ city }}
     <form @submit.prevent="submit">
         <div class="row">
             <div class="col-12">

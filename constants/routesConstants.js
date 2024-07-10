@@ -1,23 +1,23 @@
 const routes = [
   {
     route: "/",
-    name: "Home",
+    name: "Inicio",
     icon: "fa-solid fa-house",
   },
   {
     route: "/branch",
-    name: "Branch",
-    icon: "fa-solid fa-house",
+    name: "Sucursales",
+    icon: "fa-solid fa-code-branch",
+  },
+  {
+    route: "/store",
+    name: "Almacenes",
+    icon: "fa-solid fa-boxes-stacked",
   },
   {
     route: "/item",
-    name: "Item",
-    icon: "fa-solid fa-house",
-  },
-  {
-    route: "/about",
-    name: "Contacto",
-    icon: "fa-solid fa-circle-question",
+    name: "Items",
+    icon: "fa-solid fa-box",
   },
 ];
 

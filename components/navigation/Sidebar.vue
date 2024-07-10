@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import routesConstants from "@/constants/routesConstants";
+import authService from "~/api/factories/auth";
 const authStore = useAuthStore()
 
 const routes = ref(routesConstants);
 const clientOnlyContent = ref(null)
 const showPlaceholder = ref(true)
+
+function logOut() {
+  const payload = {
+    refresh_token: authStore.refresh_token
+  }
+  authService.logout(payload).then(() => {
+    authStore.logout()
+  })
+}
 
 onMounted(async () => {
   await nextTick()
@@ -33,9 +43,9 @@ onMounted(async () => {
           </div>
         </div>
         <div class="sidebar__sidebarRouteContainer">
-          <div @click="authStore.logout()" class="sidebar__sidebarRoute sidebar__sidebarRoute--button">
+          <div @click="logOut" class="sidebar__sidebarRoute sidebar__sidebarRoute--button">
             <font-awesome-icon icon="fa-solid fa-door-open" class="me-3" />
-            <span>Logout</span>
+            <span>Salir</span>
           </div>
         </div>
       </div>

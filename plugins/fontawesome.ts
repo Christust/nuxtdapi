@@ -11,7 +11,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 // This is important, we are going to let Nuxt worry about the CSS
 config.autoAddCss = false;
 
-const fasIcons: IconDefinition[] = [fas.faMicrochip, fas.faPenToSquare, fas.faTrashCan, fas.faHouse, fas.faCircleQuestion, fas.faDoorOpen, fas.faEllipsis, fas.faCaretUp, fas.faCaretDown, fas.faTimes, fas.faChevronRight, fas.faChevronLeft, fas.faSquareCheck];
+const fasIcons: IconDefinition[] = [fas.faMicrochip, fas.faPenToSquare, fas.faTrashCan, fas.faHouse, fas.faCircleQuestion, fas.faDoorOpen, fas.faEllipsis, fas.faCaretUp, fas.faCaretDown, fas.faTimes, fas.faChevronRight, fas.faChevronLeft, fas.faSquareCheck, fas.faCodeBranch, fas.faBoxesStacked, fas.faBox];
 const farIcons: IconDefinition[] = [far.faSquareCheck];
 const fabIcons: IconDefinition[] = [];
 

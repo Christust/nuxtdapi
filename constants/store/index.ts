@@ -1,20 +1,20 @@
-export const branchIcons = [
+export const storeIcons = [
     {
-        text: 'Edición de sucursal',
+        text: 'Edición de almacen',
         icon: 'edit',
         iconSize: 'xl',
         iconType: 'fa',
-        action: 'updateBranch'
+        action: 'updateStore'
     },
     {
-        text: 'Eliminar sucursal',
+        text: 'Eliminar almacen',
         icon: 'trash-can',
         iconSize: 'xl',
         iconType: 'fa',
-        action: 'destroyBranch'
+        action: 'destroyStore'
     }
 ]
-export const branchFields = [
+export const storeFields = [
     {
         key: 'name',
         label: 'Nombre',
@@ -22,22 +22,10 @@ export const branchFields = [
         tdClass: 'text-center align-middle',
     },
     {
-        key: 'country',
-        label: 'País',
+        key: 'branch',
+        label: 'Sucursal',
         thClass: 'text-center',
         tdClass: 'text-center align-middle',
-    },
-    {
-        key: 'state',
-        label: 'Estado',
-        thClass: 'text-center',
-        tdClass: 'text-center align-middle'
-    },
-    {
-        key: 'city',
-        label: 'Ciudad',
-        thClass: 'text-center',
-        tdClass: 'text-center align-middle'
     },
     {
         key: 'actions',

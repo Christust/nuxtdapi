@@ -6,7 +6,7 @@ import { branchFields, branchIcons } from '~/constants/branch';
 const searchStore = useSearchStore()
 
 // Refs
-const branchs = ref()
+const branches = ref()
 const branchData = ref({})
 const total = ref(0)
 const limit = ref(5)
@@ -25,8 +25,9 @@ function listBranchs({ page = 0, search = null }) {
     search: search || searchStore.searchValue
   }
   branchService.list(payload).then((res) => {
-    branchs.value = res.data;
-
+    branches.value = res.data.branches;
+    total.value = res.data.total;
+    limit.value = res.data.limit;
   })
 }
 function createBranch() {
@@ -70,12 +71,21 @@ onMounted(() => (
 
 <template>
   <div class="d-flex justify-content-end mb-3">
-    <div class="col-3 text-end"><button @click="createBranch" class="btn btn-primary">Crear Branch</button></div>
+    <div class="col-3 text-end"><button @click="createBranch" class="btn btn-primary">Crear sucursal</button></div>
   </div>
   <div class="card rounded-4 p-4 shadow">
     <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de productos'" class="mb-4"
       @search="searchBranchs" />
-    <SharedTableHelper :fields="branchFields" :records="branchs">
+    <SharedTableHelper :fields="branchFields" :records="branches">
+      <template #cell(country)="record">
+        <span v-text="record.country.name"></span>
+      </template>
+      <template #cell(state)="record">
+        <span v-text="record.state.name"></span>
+      </template>
+      <template #cell(city)="record">
+        <span v-text="record.city.name"></span>
+      </template>
       <template #cell(actions)="record">
         <SharedPointsMenu @action="actionPoint" :iconsRender="branchIcons" :info="record" />
       </template>
