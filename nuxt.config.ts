@@ -8,7 +8,6 @@ export default defineNuxtConfig({
   build: {
     transpile: ['@popperjs/core']
   },
-
   css: [
     "@fortawesome/fontawesome-svg-core/styles.css",
     "~/assets/scss/index.scss",
@@ -17,7 +16,7 @@ export default defineNuxtConfig({
   pinia: {
     storesDirs: ["./stores/**", "./custom-folder/stores/**"],
   },
-  ssr: true,
+  ssr: false,
   vite: {
     define: {
       __VUE_OPTIONS_API__: true,
