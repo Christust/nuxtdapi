@@ -2,14 +2,14 @@ name: Deployed to Firebase
 on:
   push:
     branches:
-      - master
+      - staging
 jobs:
   firebase-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: master
+          ref: staging
           fetch-depth: '0'
       - uses: actions/setup-node@master
         with:
