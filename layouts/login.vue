@@ -2,9 +2,7 @@
 
 <template>
   <div>
-    <p>header login</p>
     <slot />
-    footer login
   </div>
 </template>
 
