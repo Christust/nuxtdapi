@@ -5,7 +5,7 @@ import { useCounterStore } from "@/stores/counter";
 import { useAuthStore } from "@/stores/auth";
 
 const instance = axios.create({
-  baseURL: "https://moderatorem.pythonanywhere.com/",
+  baseURL: "http://127.0.0.1:8000/",
   timeout: 5000,
 });
 

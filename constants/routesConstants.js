@@ -5,17 +5,17 @@ const routes = [
     icon: "fa-solid fa-house",
   },
   {
-    route: "/branch",
+    route: "/branches",
     name: "Sucursales",
     icon: "fa-solid fa-code-branch",
   },
   {
-    route: "/store",
+    route: "/stores",
     name: "Almacenes",
     icon: "fa-solid fa-boxes-stacked",
   },
   {
-    route: "/item",
+    route: "/items",
     name: "Items",
     icon: "fa-solid fa-box",
   },

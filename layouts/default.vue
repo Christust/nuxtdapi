@@ -4,6 +4,14 @@ const routes = ref(routesConstants);
 const router = useRoute();
 const counter = useCounterStore()
 
+function routeLabel(route: string) {
+  const routeLabels: any = {
+    "store-id": "Stocks",
+    default: "Ruta"
+  }
+  return routeLabels[route] || routeLabels.default
+}
+
 </script>
 
 <template>
@@ -12,7 +20,7 @@ const counter = useCounterStore()
     <div class="sideMainContainer mainContainer">
       <header>
         <h3 v-text="routes.filter((route: any) => route.route === router.path)[0]?.name
-          "></h3>
+          || routeLabel(router.name)"></h3>
         <hr />
       </header>
       <main class="mainContent">

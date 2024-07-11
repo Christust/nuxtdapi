@@ -1,0 +1,25 @@
+name: Deployed to Firebase
+on:
+  push:
+    branches:
+      - master
+jobs:
+  firebase-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+          fetch-depth: '0'
+      - uses: actions/setup-node@master
+        with:
+          node-version: '18.17.1'
+      - name: Install packages
+        run: npm install
+      - name: Build Project
+        run: npx nuxi generate
+      - uses: w9jds/firebase-action@master
+        with:
+             args: deploy --only hosting
+        env:
+             FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

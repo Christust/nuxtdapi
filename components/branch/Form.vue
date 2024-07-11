@@ -100,9 +100,6 @@ defineExpose({
 </script>
 
 <template>
-    {{ country }}
-    {{ state }}
-    {{ city }}
     <form @submit.prevent="submit">
         <div class="row">
             <div class="col-12">

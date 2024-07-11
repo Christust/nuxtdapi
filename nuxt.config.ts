@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   },
   router: {
     options: {
-      hashMode: true
+      hashMode: false
     }
   },
   // End SPA
