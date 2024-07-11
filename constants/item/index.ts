@@ -40,8 +40,8 @@ export const itemFields = [
         tdClass: 'text-center align-middle'
     },
     {
-        key: 'brand',
-        label: 'Marca',
+        key: 'unit_price',
+        label: 'Precio unitario',
         thClass: 'text-center',
         tdClass: 'text-center align-middle'
     },
