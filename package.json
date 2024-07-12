@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "build-staging": "nuxt build --dotenv .env.staging",
+    "dev": "nuxt dev --dotenv .env.local",
+    "staging": "nuxt dev --dotenv .env.staging",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -33,6 +35,7 @@
     "pinia": "^2.1.7",
     "sass": "^1.69.5",
     "sweetalert": "^2.1.2",
+    "vue-select": "^4.0.0-beta.6",
     "yup-locales": "^1.2.24"
   }
 }
