@@ -4,8 +4,8 @@
     </NuxtLayout>
 </template>
 <script setup lang="ts">
-const useCounter = useCounterStore()
+const useLoader = useLoaderStore()
 onMounted(() => {
-    useCounter.resetCounter()
+    useLoader.resetLoader()
 })
 </script>

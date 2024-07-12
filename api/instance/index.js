@@ -1,7 +1,7 @@
 import axios from "axios";
 import swal from "sweetalert";
 import authService from "../factories/auth";
-import { useCounterStore } from "@/stores/counter";
+import { useLoaderStore } from "@/stores/loader";
 import { useAuthStore } from "@/stores/auth";
 
 const config = useRuntimeConfig()
@@ -13,27 +13,27 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   const useAuth = useAuthStore();
-  const useCounter = useCounterStore();
+  const useLoader = useLoaderStore();
   if (useAuth.isLoggedIn) {
     config.headers.Authorization = `Bearer ${useAuth.token}`;
   }
-  useCounter.setCounter(+1);
+  useLoader.setLoader(+1);
   return config;
 });
 
 instance.interceptors.response.use(
   (res) => {
-    const useCounter = useCounterStore();
+    const useLoader = useLoaderStore();
     setTimeout(() => {
-      useCounter.setCounter(-1);
+      useLoader.setLoader(-1);
     }, 500)
     return res;
   },
   (error) => {
-    const useCounter = useCounterStore();
+    const useLoader = useLoaderStore();
     const authStore = useAuthStore();
     setTimeout(() => {
-      useCounter.setCounter(-1);
+      useLoader.setLoader(-1);
     }, 500)
     if (error.response.data.code === 'token_not_valid') {
       const payload = {

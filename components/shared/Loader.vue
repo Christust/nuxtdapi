@@ -3,7 +3,7 @@
 <template>
     <div>
         <div class="d-flex justify-content-center">
-            <div class="spinner-border loader" role="status">
+            <div class="spinner-border loaderSpiner" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <div className="modal-backdrop best_zind"></div>

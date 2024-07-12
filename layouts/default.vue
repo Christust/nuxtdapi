@@ -2,7 +2,7 @@
 import routesConstants from "@/constants/routesConstants";
 const routes = ref(routesConstants);
 const router = useRoute();
-const counter = useCounterStore()
+const loader = useLoaderStore()
 
 function routeLabel(route: string) {
   const routeLabels: any = {
@@ -26,7 +26,7 @@ function routeLabel(route: string) {
       <main class="mainContent">
         <slot />
       </main>
-      <SharedLoader v-if="counter.getCounter > 0" />
+      <SharedLoader v-if="loader.getLoader > 0" />
       <footer class="footerContent">Made by MODERATOREM</footer>
     </div>
   </div>

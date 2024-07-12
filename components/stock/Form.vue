@@ -14,6 +14,9 @@ const props = defineProps({
 })
 const { action, btnActionLabel } = toRefs(props)
 
+// Stores
+const useLoader = useLoaderStore()
+
 // Form schema
 const getValidationSchema = computed(() => {
     const schema = {
@@ -66,16 +69,32 @@ function listStores() {
         stores.value = res.data.stores
     })
 }
-function listItems() {
-    itemService.list().then((res) => {
+function listItems({ search = "", loading = null }) {
+    const payload = {
+        search
+    }
+    itemService.list(payload).then((res) => {
         items.value = res.data.items
+        if (loading) {
+            setTimeout(() => {
+                loading(false)
+                useLoader.enableLoader()
+            }, 700)
+        }
     })
+}
+function onSearch(search, loading) {
+    if (search.length) {
+        useLoader.disableLoader()
+        loading(true);
+        listItems({ search, loading });
+    }
 }
 
 // Hooks
 onMounted(() => {
     listStores()
-    listItems()
+    listItems({})
 })
 defineExpose({
     onShown
@@ -100,10 +119,22 @@ defineExpose({
             <div class="col-12">
                 <div class="mb-3">
                     <label for="item" class="form-label">Item</label>
-                    <select class="form-select" v-model="item">
-                        <option v-for="itemElement in items" :key="itemElement.id + itemElement.name + 'ITEM'"
-                            :value="itemElement.id" v-text="itemElement.name"></option>
-                    </select>
+                    <v-select label="name" v-model="item" :filterable="false" :options="items"
+                        :reduce="(option) => option.id" @search="(search, loading) =>
+                            onSearch(search, loading)
+                            ">
+                        <template slot="no-options"> Escribe para buscar... </template>
+                        <template slot="option" slot-scope="option">
+                            <div class="d-center">
+                                {{ option.name }}
+                            </div>
+                        </template>
+                        <template slot="selected-option" slot-scope="option">
+                            <div class="selected d-center">
+                                {{ option.name }}
+                            </div>
+                        </template>
+                    </v-select>
                     <div class="invalid-feedback d-block" v-if="errors.item">
                         {{ errors.item }}
                     </div>
