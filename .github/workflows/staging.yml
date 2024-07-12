@@ -17,7 +17,11 @@ jobs:
       - name: Install packages
         run: npm install
       - name: Build Project
-        run: npx nuxi generate --dotenv .env.staging
+        env:
+            BACKEND_URL: ${{ secrets.BACKEND_STAGING_URL }}
+        run: |
+          echo "BACKEND_URL=${{ secrets.BACKEND_STAGING_URL }}" > .env.staging
+          npx nuxi generate --dotenv .env.staging
       - uses: w9jds/firebase-action@master
         with:
              args: deploy --only hosting
