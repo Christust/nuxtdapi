@@ -33,9 +33,9 @@ function emptyText() {
 </script>
 
 <template>
-  <div class="d-flex mb-2" :class="aditionalMainClass">
+  <div class="row align-items-end mb-3" :class="aditionalMainClass">
     <div :class="stringClassByRules" class="input-search layoutContainer">
-      <input :class="'input-search form-control border-end-0 border ' + aditionalInputClass" type="search"
+      <input :class="'input-search form-control border-end-0 border ' + aditionalInputClass" type="text"
         v-model="searchValue" @change="emptyText" @keyup.enter="emit('search', $event.target.value)"
         :placeholder="placeholder" id="example-search-input" />
       <button class="clear-icon" type="button" @click="clearSearch" v-if="searchValue">

@@ -4,8 +4,10 @@ import authService from "../factories/auth";
 import { useCounterStore } from "@/stores/counter";
 import { useAuthStore } from "@/stores/auth";
 
+const config = useRuntimeConfig()
+
 const instance = axios.create({
-  baseURL: "https://moderatorem.pythonanywhere.com/",
+  baseURL: config.public.backend_url,
   timeout: 5000,
 });
 

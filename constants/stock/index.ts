@@ -4,14 +4,14 @@ export const stockIcons = [
         icon: 'edit',
         iconSize: 'xl',
         iconType: 'fa',
-        action: 'updateItem'
+        action: 'updateStock'
     },
     {
         text: 'Eliminar stock',
         icon: 'trash-can',
         iconSize: 'xl',
         iconType: 'fa',
-        action: 'destroyItem'
+        action: 'destroyStock'
     }
 ]
 export const stockFields = [

@@ -12,6 +12,11 @@ const routes = [
   {
     route: "/stores",
     name: "Almacenes",
+    icon: "fa-solid fa-store",
+  },
+  {
+    route: "/stocks",
+    name: "Existencias",
     icon: "fa-solid fa-boxes-stacked",
   },
   {

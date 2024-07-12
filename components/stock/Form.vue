@@ -2,6 +2,8 @@
 import { useForm } from 'vee-validate'
 import { object, string, setLocale, number } from 'yup'
 import { es } from 'yup-locales'
+import storeService from '~/api/factories/store';
+import itemService from '~/api/factories/item';
 setLocale(es)
 
 // Props
@@ -54,23 +56,27 @@ function onShown() {
         amount.value = ""
     }
     if (action.value !== 'create' && props.stockData) {
-        store.value = props.stockData.store
-        item.value = props.stockData.item
+        store.value = props.stockData.store.id
+        item.value = props.stockData.item.id
         amount.value = props.stockData.amount
     }
 }
 function listStores() {
-    branchService.list().then((res) => {
-        branches.value = res.data.branches
+    storeService.list().then((res) => {
+        stores.value = res.data.stores
     })
 }
 function listItems() {
-    branchService.list().then((res) => {
-        branches.value = res.data.branches
+    itemService.list().then((res) => {
+        items.value = res.data.items
     })
 }
 
 // Hooks
+onMounted(() => {
+    listStores()
+    listItems()
+})
 defineExpose({
     onShown
 })
@@ -81,7 +87,7 @@ defineExpose({
         <div class="row">
             <div class="col-12">
                 <div class="mb-3">
-                    <label for="store" class="form-label">Nombre</label>
+                    <label for="store" class="form-label">Almacen</label>
                     <select class="form-select" v-model="store">
                         <option v-for="storeItem in stores" :key="storeItem.id + storeItem.name + 'STORE'"
                             :value="storeItem.id" v-text="storeItem.name"></option>
@@ -93,7 +99,7 @@ defineExpose({
             </div>
             <div class="col-12">
                 <div class="mb-3">
-                    <label for="item" class="form-label">Descripción</label>
+                    <label for="item" class="form-label">Item</label>
                     <select class="form-select" v-model="item">
                         <option v-for="itemElement in items" :key="itemElement.id + itemElement.name + 'ITEM'"
                             :value="itemElement.id" v-text="itemElement.name"></option>
@@ -105,8 +111,8 @@ defineExpose({
             </div>
             <div class="col-12">
                 <div class="mb-3">
-                    <label for="amount" class="form-label">Marca</label>
-                    <input id="amount" type="text" class="form-control" v-model="amount">
+                    <label for="amount" class="form-label">Cantidad</label>
+                    <input id="amount" type="number" class="form-control" v-model="amount">
                     <div class="invalid-feedback d-block" v-if="errors.amount">
                         {{ errors.amount }}
                     </div>

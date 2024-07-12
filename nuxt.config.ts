@@ -15,6 +15,7 @@ export default defineNuxtConfig({
   plugins: [
     { src: "@/plugins/fontawesome.ts", mode: "client" },
     { src: "@/plugins/bootstrap.ts", mode: "client" },
+    "@/plugins/vue-select.ts"
   ],
   devtools: { enabled: true },
   build: {
@@ -36,6 +37,13 @@ export default defineNuxtConfig({
       __VUE_PROD_DEVTOOLS__: false,
       __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
     }
+  },
+  runtimeConfig: {
+    public: {
+      backend_url: process.env.BACKEND_URL,
+    }
   }
+
+
 }
 );
