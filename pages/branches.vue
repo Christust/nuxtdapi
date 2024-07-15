@@ -74,7 +74,7 @@ onMounted(() => (
     <div class="col-3 text-end"><button @click="createBranch" class="btn btn-primary">Crear sucursal</button></div>
   </div>
   <div class="card rounded-4 p-4 shadow">
-    <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de productos'" class="mb-4"
+    <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de sucursales'" class="mb-4"
       @search="searchBranchs" />
     <SharedTableHelper :fields="branchFields" :records="branches">
       <template #cell(country)="record">

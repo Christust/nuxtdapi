@@ -18,6 +18,20 @@ const backendTecnologies = ref([
   "CRUDs completos",
 ]);
 
+const options = ref({
+  chart: {
+    id: 'vuechart-example'
+  },
+  xaxis: {
+    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+  }
+})
+const series = ref([{
+  name: 'series-1',
+  data: [30, 40, 45, 50, 49, 60, 70, 91]
+}])
+
+
 const authStore = useAuthStore();
 
 function showAction() {
@@ -28,6 +42,8 @@ function showAction() {
 <template>
   <div>
     <main>
+      <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
+      <apexchart width="500" type="line" :options="options" :series="series"></apexchart>
       <div>
         <p>
           Este proyecto fue construido con la intención de que sirviera de

@@ -74,7 +74,7 @@ onMounted(() => (
         <div class="col-3 text-end"><button @click="createStock" class="btn btn-primary">Crear Stock</button></div>
     </div>
     <div class="card rounded-4 p-4 shadow">
-        <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de productos'" class="mb-4"
+        <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de existencias'" class="mb-4"
             @search="searchStocks" />
         <SharedTableHelper :fields="stockFields" :records="stocks">
             <template #cell(consumable)="record">

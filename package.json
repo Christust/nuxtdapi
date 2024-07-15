@@ -30,12 +30,14 @@
     "@popperjs/core": "^2.11.8",
     "@vee-validate/nuxt": "^4.13.1",
     "@vee-validate/yup": "^4.13.2",
+    "apexcharts": "^3.50.0",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.3",
     "pinia": "^2.1.7",
     "sass": "^1.69.5",
     "sweetalert": "^2.1.2",
     "vue-select": "^4.0.0-beta.6",
+    "vue3-apexcharts": "^1.5.3",
     "yup-locales": "^1.2.24"
   }
 }

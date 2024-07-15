@@ -2,7 +2,7 @@
 import stockService from '~/api/factories/stock';
 import { stockFields, stockIcons } from '~/constants/stock';
 import storeService from '~/api/factories/store';
-
+import branchService from '~/api/factories/branch';
 // Stores
 const searchStore = useSearchStore()
 
@@ -18,6 +18,8 @@ const searchComponent = ref<HTMLInputElement | any>(null)
 const stockModal = ref<HTMLInputElement | any>(null)
 const stores = ref([])
 const store = ref(null)
+const branches = ref([])
+const branch = ref(null)
 
 // Functions
 function listStocks({ page = 0, search = null }) {
@@ -26,7 +28,8 @@ function listStocks({ page = 0, search = null }) {
         page: page || activePage.value,
         limit: limit.value,
         search: search || searchStore.searchValue,
-        store: store.value
+        store: store.value,
+        branch: branch.value
     }
     stockService.list(payload).then((res) => {
         stocks.value = res.data.stocks
@@ -66,15 +69,30 @@ function changePage(page: number) {
 function searchStocks() {
     listStocks({ page: 1 })
 }
-function listStores() {
-    storeService.list().then((res) => {
-        stores.value = res.data.stores
+function listBranches() {
+    const payload = {
+        unlimit: true
+    }
+    branchService.list(payload).then((res) => {
+        branches.value = res.data.branches
     })
+}
+function listStores() {
+    store.value = null
+    const payload = {
+        branch_id: branch.value ? branch.value : null,
+        unlimit: true
+    }
+    storeService.list(payload).then((res) => {
+        stores.value = res.data.stores
+        listStocks({})
+    })
+
 }
 
 // Hooks
 onMounted(() => {
-    listStores()
+    listBranches()
 })
 onMounted(() => (
     listStocks({})
@@ -86,12 +104,20 @@ onMounted(() => (
         <div class="col-3 text-end"><button @click="createStock" class="btn btn-primary">Crear Stock</button></div>
     </div>
     <div class="card rounded-4 p-4 shadow">
-        <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de productos'" class="mb-4"
+        <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de existencias'" class="mb-4"
             @search="searchStocks">
             <template #extraElements>
-                <div class="col-3 ms-2">
+                <div class="col-2 ms-2">
+                    <label class="form-label">Sucursal</label>
+                    <select @change="listStores" class="form-select" v-model="branch">
+                        <option :value="null" selected>Todas</option>
+                        <option v-for="branchItem in branches" :key="branchItem.id + branchItem.name + 'STORE'"
+                            :value="branchItem.id" v-text="branchItem.name"></option>
+                    </select>
+                </div>
+                <div class="col-2 ms-2">
                     <label class="form-label">Almacen</label>
-                    <select @change="listStocks" class="form-select" v-model="store">
+                    <select @change="listStocks({})" class="form-select" v-model="store">
                         <option :value="null" selected>Todos</option>
                         <option v-for="storeItem in stores" :key="storeItem.id + storeItem.name + 'STORE'"
                             :value="storeItem.id" v-text="storeItem.name"></option>
@@ -100,6 +126,9 @@ onMounted(() => (
             </template>
         </SharedSearchHelper>
         <SharedTableHelper :fields="stockFields" :records="stocks">
+            <template #cell(branch)="record">
+                <span v-text="record.store.branch.name"></span>
+            </template>
             <template #cell(store)="record">
                 <span v-text="record.store.name"></span>
             </template>

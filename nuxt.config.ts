@@ -15,7 +15,8 @@ export default defineNuxtConfig({
   plugins: [
     { src: "@/plugins/fontawesome.ts", mode: "client" },
     { src: "@/plugins/bootstrap.ts", mode: "client" },
-    "@/plugins/vue-select.ts"
+    "@/plugins/vue-select.ts",
+    "@/plugins/apex-charts.ts"
   ],
   devtools: { enabled: true },
   build: {

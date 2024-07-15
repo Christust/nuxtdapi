@@ -16,6 +16,12 @@ export const stockIcons = [
 ]
 export const stockFields = [
     {
+        key: 'branch',
+        label: 'Sucursal',
+        thClass: 'text-center',
+        tdClass: 'text-center align-middle',
+    },
+    {
         key: 'store',
         label: 'Almacen',
         thClass: 'text-center',
