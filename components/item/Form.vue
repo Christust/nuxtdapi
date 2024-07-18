@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from 'vee-validate'
-import { object, string, boolean, setLocale } from 'yup'
+import { object, string, boolean, setLocale, number } from 'yup'
 import { es } from 'yup-locales'
 setLocale(es)
 
@@ -12,13 +12,17 @@ const props = defineProps({
 })
 const { action, btnActionLabel } = toRefs(props)
 
+// Emits
+const emit = defineEmits(['actionSubmit', 'hideModal'])
+
 // Form schema
 const getValidationSchema = computed(() => {
     const schema = {
         name: string().required("El nombre es requerido"),
         description: string().required("La descripción es requerida"),
         brand: string().required("La marca es requerida"),
-        barcode: string().required("El codigo de barras es requerido"),
+        unit_price: number().typeError('el precio unitario debe ser un numero').required("El precio unitario es requerido"),
+        barcode: string(),
         units: string().required(),
         consumable: boolean(),
     }
@@ -33,12 +37,10 @@ const { defineField, errors, handleSubmit, meta } = useForm({
 const [name] = defineField('name')
 const [description] = defineField('description')
 const [brand] = defineField('brand')
+const [unit_price] = defineField('unit_price')
 const [barcode] = defineField('barcode')
 const [units] = defineField('units')
 const [consumable] = defineField('consumable')
-
-// Emits
-const emit = defineEmits(['actionSubmit', 'hideModal'])
 
 // Functions
 const submit = handleSubmit(() => {
@@ -49,6 +51,7 @@ function generatePayload() {
     formData.append('name', name.value)
     formData.append('description', description.value)
     formData.append('brand', brand.value)
+    formData.append('unit_price', unit_price.value)
     formData.append('barcode', barcode.value)
     formData.append('units', units.value)
     formData.append('consumable', consumable.value)
@@ -59,6 +62,7 @@ function onShown() {
         name.value = ""
         description.value = ""
         brand.value = ""
+        unit_price.value = ""
         barcode.value = ""
         units.value = "units"
         consumable.value = false
@@ -67,6 +71,7 @@ function onShown() {
         name.value = props.itemData.name
         description.value = props.itemData.description
         brand.value = props.itemData.brand
+        unit_price.value = props.itemData.unit_price
         barcode.value = props.itemData.barcode
         units.value = props.itemData.units
         consumable.value = props.itemData.consumable ? true : false
@@ -116,6 +121,16 @@ defineExpose({
                     <input id="barcode" type="text" class="form-control" v-model="barcode">
                     <div class="invalid-feedback d-block" v-if="errors.barcode">
                         {{ errors.barcode }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="mb-3">
+                    <label for="unit_price" class="form-label">Precio unitario</label>
+                    <input @keypress="useNumber($event)" id="unit_price" type="number" class="form-control"
+                        v-model="unit_price">
+                    <div class="invalid-feedback d-block" v-if="errors.unit_price">
+                        {{ errors.unit_price }}
                     </div>
                 </div>
             </div>

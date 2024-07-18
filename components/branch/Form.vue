@@ -13,11 +13,14 @@ const props = defineProps({
 })
 const { action, btnActionLabel } = toRefs(props)
 
+// Emits
+const emit = defineEmits(['actionSubmit', 'hideModal'])
+
 // Form schema
 const getValidationSchema = computed(() => {
     const schema = {
         name: string().required("El nombre es requerido"),
-        country: string().required("el país es requerido"),
+        country: string().required("El país es requerido"),
         state: string().required("El estado es requerido"),
         city: string().required("La ciudad es requerida"),
     }
@@ -36,9 +39,6 @@ const [city] = defineField('city')
 const countries = ref([])
 const states = ref([])
 const cities = ref([])
-
-// Emits
-const emit = defineEmits(['actionSubmit', 'hideModal'])
 
 // Functions
 const submit = handleSubmit(() => {

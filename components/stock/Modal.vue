@@ -1,5 +1,6 @@
 <script setup>
 import stockService from '~/api/factories/stock';
+
 // Props
 const props = defineProps({
     stockData: { type: Object, required: false, default: () => { } },
@@ -7,18 +8,18 @@ const props = defineProps({
 })
 const { stockData } = toRefs(props)
 
+// Emits
+const emit = defineEmits(['reloadStocks'])
+
 // Refs
 const stockFormRef = ref(null)
 const stockModalRef = ref(null)
 
-// Emits
-const emit = defineEmits(['reloadStocks'])
-
 // Functions
-const showModal = () => {
+function showModal() {
     stockModalRef.value.show()
 }
-const hideModal = () => {
+function hideModal() {
     stockModalRef.value.hide()
 }
 function onShown() {
@@ -73,8 +74,9 @@ defineExpose({
     <SharedGeneralModal ref="stockModalRef" @shown="onShown" :title="modalTitle" size="md" modalContentClass="p-4"
         hideHeaderClose hideFooter noCloseOnEsc>
         <template #bodyContent>
-            <StockForm v-if="props.action !== 'destroy'" ref="stockFormRef" :stockData="stockData" :action="props.action"
-                :btnActionLabel="btnActionLabel" @actionSubmit="actionSubmit" @cancelForm="hideModal" />
+            <StockForm v-if="props.action !== 'destroy'" ref="stockFormRef" :stockData="stockData"
+                :action="props.action" :btnActionLabel="btnActionLabel" @actionSubmit="actionSubmit"
+                @cancelForm="hideModal" />
             <template v-else>
                 <form @submit.prevent="destroy(stockData.id)">
                     <div class="row">

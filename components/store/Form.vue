@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from 'vee-validate'
-import { object, string, boolean, setLocale } from 'yup'
+import { object, string, setLocale } from 'yup'
 import { es } from 'yup-locales'
 import branchService from '~/api/factories/branch';
 setLocale(es)
@@ -13,11 +13,14 @@ const props = defineProps({
 })
 const { action, btnActionLabel } = toRefs(props)
 
+// Emits
+const emit = defineEmits(['actionSubmit', 'hideModal'])
+
 // Form schema
 const getValidationSchema = computed(() => {
     const schema = {
         name: string().required("El nombre es requerido"),
-        branch: string().required("La descripción es requerida"),
+        branch: string().required("La sucursal es requerida"),
     }
     return object(schema)
 })
@@ -30,9 +33,6 @@ const { defineField, errors, handleSubmit, meta } = useForm({
 const [name] = defineField('name')
 const [branch] = defineField('branch')
 const branches = ref([])
-
-// Emits
-const emit = defineEmits(['actionSubmit', 'hideModal'])
 
 // Functions
 const submit = handleSubmit(() => {

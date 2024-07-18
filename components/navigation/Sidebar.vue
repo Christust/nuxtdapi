@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import routesConstants from "@/constants/routesConstants";
 import authService from "~/api/factories/auth";
+
+// Stores
 const authStore = useAuthStore()
 
+// Refs
 const routes = ref(routesConstants);
 const clientOnlyContent = ref(null)
 const showPlaceholder = ref(true)
 
+// Functions
 function logOut() {
   const payload = {
     refresh_token: authStore.refresh_token
@@ -16,13 +20,13 @@ function logOut() {
   })
 }
 
+// Hooks
 onMounted(async () => {
   await nextTick()
   if (process.client && clientOnlyContent.value) {
     showPlaceholder.value = false
   }
 })
-
 </script>
 
 <template>

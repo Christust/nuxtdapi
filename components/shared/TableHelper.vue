@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+// Props
 const props = defineProps({
   fields: { type: Array, required: true, default: () => [] },
   records: { type: Array, required: true, default: () => [] },
@@ -9,16 +9,18 @@ const props = defineProps({
   tableClass: { type: String, required: false, default: '' }
 })
 
+// Emits
 const emit = defineEmits(['actionSort'])
 
+// Refs
 const sortOrder = ref(1)
 const sortBy = ref('')
 
+// Functions
 function rowClickHandler(clickActive = true, id) {
   if (!props.rowClickActive || !clickActive) return
   props.rowClickFunction(id)
 }
-
 function sort(field, sortable) {
   if (!sortable) return
   if (props.exposeSort) {
@@ -35,6 +37,7 @@ function sort(field, sortable) {
   }
 }
 
+// Computed
 const sortedList = computed(() => {
   if (sortBy.value != '' && !props.exposeSort) {
     return [...props.records]
@@ -75,7 +78,7 @@ const sortedList = computed(() => {
               @click="rowClickHandler(field?.rowClickActive, record?.id)">
               <slot :name="'cell(' + field.key + ')'" :index="index" v-bind="record">{{
                 record[field.key]
-                }}</slot>
+              }}</slot>
             </td>
           </tr>
         </tbody>

@@ -1,6 +1,6 @@
 <script setup>
-import { computed, toRefs } from 'vue'
 
+// Props
 const props = defineProps({
   colValue: { type: Number, required: false, default: 1 },
   placeholder: { type: String, required: false, default: 'Search' },
@@ -8,21 +8,15 @@ const props = defineProps({
   aditionalContainerClass: { type: String, required: false, default: '' },
   aditionalMainClass: { type: String, required: false, default: '' }
 })
-const emit = defineEmits(['search'])
 const { placeholder, aditionalMainClass } = toRefs(props)
-const stringClassByRules = computed(() => {
-  return `col-${props.colValue || 12} ` + props.aditionalContainerClass
-})
 
+// Emits
+const emit = defineEmits(['search'])
+
+// Stores
 const searchStore = useSearchStore()
 
-const searchValue = computed({
-  get: () => searchStore.searchValue,
-  set: (newValue) => {
-    searchStore.updateSearch(newValue)
-  }
-})
-
+// Functions
 function clearSearch() {
   searchValue.value = ''
   emit('search', searchValue.value)
@@ -30,11 +24,23 @@ function clearSearch() {
 function emptyText() {
   if (searchValue.value === '') emit('search', '')
 }
+
+// Computed
+const stringClassByRules = computed(() => {
+  return `col-${props.colValue || 12} ` + props.aditionalContainerClass
+})
+const searchValue = computed({
+  get: () => searchStore.searchValue,
+  set: (newValue) => {
+    searchStore.updateSearch(newValue)
+  }
+})
 </script>
 
 <template>
   <div class="row align-items-end mb-3" :class="aditionalMainClass">
     <div :class="stringClassByRules" class="input-search layoutContainer">
+      <label class="form-label">Buscador</label>
       <input :class="'input-search form-control border-end-0 border ' + aditionalInputClass" type="text"
         v-model="searchValue" @change="emptyText" @keyup.enter="emit('search', $event.target.value)"
         :placeholder="placeholder" id="example-search-input" />

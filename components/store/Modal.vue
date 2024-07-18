@@ -57,7 +57,14 @@ function destroy(id) {
 
 // Computed
 const modalTitle = computed(() => {
-    return props.action === 'create' ? 'Crear nuevo store' : 'Editar store'
+    switch (props.action) {
+        case "create":
+            return 'Crear nuevo almacen'
+        case "update":
+            return 'Editar almacen'
+        case "destroy":
+            return 'Eliminar almacen'
+    }
 })
 const btnActionLabel = computed(() => {
     return props.action === 'create' ? 'Crear' : 'Actualizar'

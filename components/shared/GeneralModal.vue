@@ -1,3 +1,67 @@
+<script setup>
+
+// Props
+const props = defineProps({
+  title: { type: String, required: false, default: 'Modal title' },
+  size: { type: String, required: false, default: 'sm' },
+  modalContentClass: { type: String, required: false, default: '' },
+  hideHeaderClose: { type: Boolean, required: false, default: false },
+  noCloseOnBackdrop: { type: Boolean, required: false, default: false },
+  noCloseOnEsc: { type: Boolean, required: false, default: false },
+  hideFooter: { type: Boolean, required: false, default: false },
+  hideHeader: { type: Boolean, required: false, default: false }
+})
+const { title, hideHeaderClose, noCloseOnBackdrop, noCloseOnEsc, modalContentClass, hideFooter } =
+  toRefs(props)
+
+// Emits
+const emit = defineEmits(['shown'])
+
+// Refs
+const generalModal = ref(null)
+
+// Contants
+let modalInstance = null
+
+// Functions
+function toggle() {
+  if (modalInstance) {
+    modalInstance.toggle()
+  }
+}
+function show() {
+  if (modalInstance) {
+    modalInstance.show()
+  }
+}
+function hide() {
+  if (modalInstance) {
+    modalInstance.hide()
+  }
+}
+function handleModalShown() {
+  emit('shown')
+}
+
+// Computed
+const modalSize = computed(() => {
+  return props.size ? `modal-${props.size}` : ''
+})
+
+// Hooks
+onMounted(() => {
+  import('bootstrap').then((bootstrap) => {
+    modalInstance = new bootstrap.Modal(generalModal.value)
+    modalInstance._config.backdrop = !noCloseOnBackdrop.value
+    modalInstance._config.keyboard = !noCloseOnEsc.value
+    generalModal.value.addEventListener('shown.bs.modal', handleModalShown)
+  })
+})
+defineExpose({
+  show,
+  hide
+})
+</script>
 <template>
   <ClientOnly>
     <div class="modal fade" ref="generalModal" tabindex="-1" aria-hidden="true">
@@ -20,68 +84,3 @@
     </div>
   </ClientOnly>
 </template>
-<script setup>
-
-const props = defineProps({
-  title: { type: String, required: false, default: 'Modal title' },
-  size: { type: String, required: false, default: 'sm' },
-  modalContentClass: { type: String, required: false, default: '' },
-  hideHeaderClose: { type: Boolean, required: false, default: false },
-  noCloseOnBackdrop: { type: Boolean, required: false, default: false },
-  noCloseOnEsc: { type: Boolean, required: false, default: false },
-  hideFooter: { type: Boolean, required: false, default: false },
-  hideHeader: { type: Boolean, required: false, default: false }
-})
-
-const { title, hideHeaderClose, noCloseOnBackdrop, noCloseOnEsc, modalContentClass, hideFooter } =
-  toRefs(props)
-const generalModal = ref(null)
-let modalInstance = null
-
-const modalSize = computed(() => {
-  return props.size ? `modal-${props.size}` : ''
-})
-
-// eslint-disable-next-line no-unused-vars
-const toggle = () => {
-  if (modalInstance) {
-    modalInstance.toggle()
-  }
-}
-
-// eslint-disable-next-line no-unused-vars
-const show = () => {
-  if (modalInstance) {
-    modalInstance.show()
-  }
-}
-
-const hide = () => {
-  if (modalInstance) {
-    modalInstance.hide()
-  }
-}
-
-onMounted(() => {
-  import('bootstrap').then((bootstrap) => {
-    modalInstance = new bootstrap.Modal(generalModal.value)
-    modalInstance._config.backdrop = !noCloseOnBackdrop.value
-    modalInstance._config.keyboard = !noCloseOnEsc.value
-
-    generalModal.value.addEventListener('shown.bs.modal', handleModalShown)
-  })
-
-
-})
-
-const emit = defineEmits(['shown'])
-
-const handleModalShown = () => {
-  emit('shown')
-}
-
-defineExpose({
-  show,
-  hide
-})
-</script>

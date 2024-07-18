@@ -15,6 +15,9 @@ const props = defineProps({
 })
 const { action, btnActionLabel } = toRefs(props)
 
+// Emits
+const emit = defineEmits(['actionSubmit', 'hideModal'])
+
 // Stores
 const useLoader = useLoaderStore()
 
@@ -24,7 +27,7 @@ const getValidationSchema = computed(() => {
         branch: string().required("La sucursal es requerida"),
         store: string().required("El almacen es requerido"),
         item: string().required("El item es requerido"),
-        amount: number().typeError('La cantidad debe ser un numero').required("La marca es requerida"),
+        amount: number().typeError('La cantidad debe ser un numero').required("La cantidad es requerida"),
     }
     return object(schema)
 })
@@ -41,9 +44,6 @@ const [amount] = defineField('amount')
 const stores = ref([])
 const items = ref([])
 const branches = ref([])
-
-// Emits
-const emit = defineEmits(['actionSubmit', 'hideModal'])
 
 // Functions
 const submit = handleSubmit(() => {
@@ -225,7 +225,7 @@ defineExpose({
             <div class="col-12">
                 <div class="mb-3">
                     <label for="amount" class="form-label">Cantidad</label>
-                    <input id="amount" type="number" class="form-control" v-model="amount">
+                    <input @keypress="useNumber($event)" id="amount" type="number" class="form-control" v-model="amount">
                     <div class="invalid-feedback d-block" v-if="errors.amount">
                         {{ errors.amount }}
                     </div>

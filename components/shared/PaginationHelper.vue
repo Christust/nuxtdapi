@@ -10,11 +10,11 @@ const props = defineProps({
 })
 const { totalRecords, limit, externalPage, activeClass } = toRefs(props)
 
-// Refs
-const activePage = ref(1)
-
 // Emits
 const emit = defineEmits(['changePage'])
+
+// Refs
+const activePage = ref(1)
 
 // Functions
 const prevPage = () => {

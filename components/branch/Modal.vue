@@ -8,18 +8,18 @@ const props = defineProps({
 })
 const { branchData } = toRefs(props)
 
+// Emits
+const emit = defineEmits(['reloadBranchs'])
+
 // Refs
 const branchFormRef = ref(null)
 const branchModalRef = ref(null)
 
-// Emits
-const emit = defineEmits(['reloadBranchs'])
-
 // Functions
-const showModal = () => {
+function showModal() {
     branchModalRef.value.show()
 }
-const hideModal = () => {
+function hideModal() {
     branchModalRef.value.hide()
 }
 function onShown() {
