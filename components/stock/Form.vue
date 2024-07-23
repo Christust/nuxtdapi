@@ -137,6 +137,9 @@ function onSearchBranches(search, loading) {
 }
 
 // Hooks
+watch(branch, ()=>{
+    listStores({})
+})
 onMounted(() => {
     listBranches({})
     listStores({})
@@ -153,7 +156,7 @@ defineExpose({
             <div class="col-12">
                 <div class="mb-3">
                     <label for="store" class="form-label">Sucursal</label>
-                    <v-select @option:selected="listStores({})" label="name" v-model="branch" :filterable="false"
+                    <v-select label="name" v-model="branch" :filterable="false"
                         :options="branches" :reduce="(option) => option.id" @search="(search, loading) =>
                             onSearchBranches(search, loading)
                             ">
@@ -225,7 +228,7 @@ defineExpose({
             <div class="col-12">
                 <div class="mb-3">
                     <label for="amount" class="form-label">Cantidad</label>
-                    <input @keypress="useNumber($event)" id="amount" type="number" class="form-control" v-model="amount">
+                    <input @keypress="isNumber($event)" id="amount" type="number" class="form-control" v-model="amount">
                     <div class="invalid-feedback d-block" v-if="errors.amount">
                         {{ errors.amount }}
                     </div>

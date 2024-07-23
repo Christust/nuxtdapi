@@ -32,4 +32,4 @@ function routeLabel(route: string) {
   </div>
 </template>
 
-<style scoped></style>
+

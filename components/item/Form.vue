@@ -127,7 +127,7 @@ defineExpose({
             <div class="col-12">
                 <div class="mb-3">
                     <label for="unit_price" class="form-label">Precio unitario</label>
-                    <input @keypress="useNumber($event)" id="unit_price" type="number" class="form-control"
+                    <input @keypress="isNumber($event)" id="unit_price" type="number" class="form-control"
                         v-model="unit_price">
                     <div class="invalid-feedback d-block" v-if="errors.unit_price">
                         {{ errors.unit_price }}

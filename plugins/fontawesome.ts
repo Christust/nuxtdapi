@@ -11,7 +11,28 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 // This is important, we are going to let Nuxt worry about the CSS
 config.autoAddCss = false;
 
-const fasIcons: IconDefinition[] = [fas.faMicrochip, fas.faPenToSquare, fas.faTrashCan, fas.faHouse, fas.faCircleQuestion, fas.faDoorOpen, fas.faEllipsis, fas.faCaretUp, fas.faCaretDown, fas.faTimes, fas.faChevronRight, fas.faChevronLeft, fas.faSquareCheck, fas.faCodeBranch, fas.faBoxesStacked, fas.faBox, fas.faBoxArchive, fas.faStore];
+const fasIcons: IconDefinition[] = [
+  fas.faMicrochip,
+  fas.faPenToSquare,
+  fas.faTrashCan,
+  fas.faHouse,
+  fas.faCircleQuestion,
+  fas.faDoorOpen,
+  fas.faEllipsis,
+  fas.faCaretUp,
+  fas.faCaretDown,
+  fas.faTimes,
+  fas.faChevronRight,
+  fas.faChevronLeft,
+  fas.faSquareCheck,
+  fas.faCodeBranch,
+  fas.faBoxesStacked,
+  fas.faBox,
+  fas.faBoxArchive,
+  fas.faStore,
+  fas.faBellConcierge,
+  fas.faMinus
+];
 const farIcons: IconDefinition[] = [far.faSquareCheck];
 const fabIcons: IconDefinition[] = [];
 
@@ -24,8 +45,6 @@ fabIcons.forEach((icon) => {
 farIcons.forEach((icon) => {
   library.add(icon);
 });
-
-
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("font-awesome-icon", FontAwesomeIcon);

@@ -20,6 +20,11 @@ const routes = [
     icon: "fa-solid fa-boxes-stacked",
   },
   {
+    route: "/material_requests",
+    name: "Peticiones de material",
+    icon: "fa-solid fa-bell-concierge",
+  },
+  {
     route: "/items",
     name: "Items",
     icon: "fa-solid fa-box",

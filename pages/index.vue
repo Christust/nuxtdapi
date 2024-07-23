@@ -84,4 +84,4 @@ function showAction() {
   </div>
 </template>
 
-<style scoped></style>
+

@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import itemService from '~/api/factories/item';
 import { unitLabels, itemFields, itemIcons } from '~/constants/item';
-
 // Stores
 const searchStore = useSearchStore()
 
 // Refs
-const items = ref()
-const itemData = ref({})
+const items = ref<Item[]>()
+const itemData = ref<Item>()
 const total = ref(0)
 const limit = ref(5)
 const activePage = ref(1)
@@ -20,7 +19,7 @@ const itemModal = ref<HTMLInputElement | any>(null)
 function unitLabel(unit: string) {
   return unitLabels[unit] || unitLabels.units
 }
-function getItems({ page = 0, search = null }) {
+function listItems({ page = 0, search = null }) {
   activePage.value = page !== 0 ? page : activePage.value
   const payload = {
     page: page || activePage.value,
@@ -37,17 +36,17 @@ function createItem() {
   itemAction.value = 'create'
   itemModal.value.showModal()
 }
-function updateItem(info: any) {
+function updateItem(info: Item) {
   itemAction.value = 'update'
   itemData.value = info
   itemModal.value.showModal()
 }
-function destroyItem(info: any) {
+function destroyItem(info: Item) {
   itemAction.value = 'destroy'
   itemData.value = info
   itemModal.value.showModal()
 }
-function actionPoint(actionPoint: string, info: any) {
+function actionPoint(actionPoint: string, info: Item) {
   switch (actionPoint) {
     case 'updateItem':
       updateItem(info)
@@ -60,15 +59,15 @@ function actionPoint(actionPoint: string, info: any) {
   }
 }
 function changePage(page: number) {
-  getItems({ page })
+  listItems({ page })
 }
 function searchItems() {
-  getItems({ page: 1 })
+  listItems({ page: 1 })
 }
 
 // Hooks
 onMounted(() => (
-  getItems({})
+  listItems({})
 ))
 </script>
 
@@ -87,14 +86,17 @@ onMounted(() => (
       <template #cell(units)="record">
         <span v-text="unitLabel(record.units)"></span>
       </template>
+      <template #cell(unit_price)="record">
+        <span v-text="formatCurrency(record.unit_price)"></span>
+      </template>
       <template #cell(actions)="record">
         <SharedPointsMenu @action="actionPoint" :iconsRender="itemIcons" :info="record" />
       </template>
     </SharedTableHelper>
     <SharedPaginationHelper ref="paginationHelper" :showCountText="false" :activeClass="true" :justifyClass="'end'"
       :totalRecords="total" :limit="limit" :externalPage="activePage" @changePage="changePage" />
-    <ItemModal ref="itemModal" :itemData="itemData" :action="itemAction" @reloadItems="getItems({})" />
+    <ItemModal ref="itemModal" :itemData="itemData" :action="itemAction" @reloadItems="listItems({})" />
   </div>
 </template>
 
-<style scoped></style>
+

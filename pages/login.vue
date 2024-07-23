@@ -36,4 +36,4 @@ function login() {
   </div>
 </template>
 
-<style scoped></style>
+
