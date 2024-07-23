@@ -114,7 +114,8 @@ function listStocks({ search = "", loading = null }) {
     const payload = {
         search,
         exclude: materialIds.value,
-        store: store.value
+        store: store.value,
+        only_existences: true
     }
     stockService.list(payload).then((res) => {
         stocks.value = res.data.stock_items
@@ -289,7 +290,8 @@ defineExpose({
                 </div>
             </div>
             <div v-if="canAdd" class="col-12 my-4 text-end"><button type="button" :disabled="!vaidMaterials"
-                    class="form-control btn btn-primary py-1 rounded-5" @click="addMore">Agregar otro material</button></div>
+                    class="form-control btn btn-primary py-1 rounded-5" @click="addMore">Agregar otro material</button>
+            </div>
             <hr />
             <div v-if="action !== 'create'" lass="col-12">
                 <div class="form-check">
