@@ -22,7 +22,7 @@ export const materialRequestFields = [
     tdClass: "text-center align-middle",
   },
   {
-    key: "store",
+    key: "store_name",
     label: "Almacen",
     thClass: "text-center",
     tdClass: "text-center align-middle",
