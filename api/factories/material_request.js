@@ -16,7 +16,7 @@ materialRequestService.show = function show(id) {
 };
 
 materialRequestService.update = function update(id, payload) {
-  return instance.put(`material_requests/${id}/`, payload);
+  return instance.put(`material_requests/${id}/`, payload, { headers: { 'content-type': 'application/json' } });
 };
 
 materialRequestService.destroy = function destroy(id) {

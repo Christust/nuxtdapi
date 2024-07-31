@@ -24,7 +24,6 @@ const getValidationSchema = computed(() => {
     const schema = {
         store: string().required(" "),
         stock_requests: array().required("La lista de materiales es requerida"),
-        finished: boolean(),
     }
     return object(schema)
 })
@@ -36,13 +35,15 @@ const { defineField, errors, handleSubmit, meta } = useForm({
 // Refs
 const [store] = defineField('store')
 const [stock_requests] = defineField('stock_requests')
-const [finished] = defineField('finished')
 const stocks = ref([])
 const stores = ref([])
 const branches = ref([])
 const canAdd = ref(false)
 stock_requests.value = [{ stock: { amount: 0, new_amount: 0, item: "", id: null } }]
 const branch = ref("")
+const all_material = ref(false)
+const finished = ref(false)
+
 // Functions
 const submit = handleSubmit(() => {
     emit('actionSubmit', generatePayload(), props.materialRequestData?.id || null)
@@ -50,7 +51,6 @@ const submit = handleSubmit(() => {
 function generatePayload() {
     const payload = {
         store: store.value,
-        finished: finished.value,
         stock_requests: []
     }
     stock_requests.value.forEach(material => {
@@ -64,12 +64,15 @@ function onShown() {
         store.value = ""
         stock_requests.value = [{ stock: { amount: 0, new_amount: 0, item: "", id: null } }]
         finished.value = false
+        all_material.value = false
     }
+    all_material.value = false
     if (action.value !== 'create' && props.materialRequestData) {
-        branch.value = props.materialRequestData.store.branch.id
+        branch.value = props.materialRequestData.branch
         store.value = props.materialRequestData.store
         stock_requests.value = props.materialRequestData.stock_requests
         finished.value = props.materialRequestData.finished
+        all_material.value = false
     }
 }
 function remove(i) {
@@ -95,7 +98,9 @@ function listBranches({ search = "", loading = null }) {
     })
 }
 function listStores({ search = "", loading = null }) {
-    store.value = null
+    if (action.value === 'create') {
+        store.value = null
+    }
     const payload = {
         search,
         branch_id: branch.value
@@ -190,8 +195,21 @@ watch(branch, () => {
     listStores({})
 })
 watch(store, () => {
-    stock_requests.value = [{ stock: { amount: 0, new_amount: 0, item: "", id: null } }]
+    if (action.value === 'create') {
+        stock_requests.value = [{ stock: { amount: 0, new_amount: 0, item: "", id: null } }]
+    }
     listStocks({})
+})
+watch(all_material, () => {
+    if (all_material.value) {
+        stock_requests.value.forEach((stock_request) => {
+            stock_request.stock.new_amount = stock_request.stock.amount
+        })
+    } else {
+        stock_requests.value.forEach((stock_request) => {
+            stock_request.stock.new_amount = 0
+        })
+    }
 })
 defineExpose({
     onShown
@@ -203,9 +221,9 @@ defineExpose({
         <div class="row">
             <div class="col-12">
                 <div class="mb-3">
-                    <label for="store" class="form-label">Sucursal</label>
-                    <v-select label="name" v-model="branch" :filterable="false" :options="branches"
-                        :reduce="(option) => option.id" @search="(search, loading) =>
+                    <label for="branch" class="form-label">Sucursal</label>
+                    <v-select :disabled="action !== 'create'" label="name" v-model="branch" :filterable="false"
+                        :options="branches" :reduce="(option) => option.id" @search="(search, loading) =>
                             onSearchBranches(search, loading)
                             ">
                         <template slot="no-options"> Escribe para buscar... </template>
@@ -228,8 +246,8 @@ defineExpose({
             <div class="col-12">
                 <div class="mb-3">
                     <label for="store" class="form-label">Almacen</label>
-                    <v-select :disabled="!branch" label="name" v-model="store" :filterable="false" :options="stores"
-                        :reduce="(option) => option.id" @search="(search, loading) =>
+                    <v-select :disabled="!branch || action !== 'create'" label="name" v-model="store"
+                        :filterable="false" :options="stores" :reduce="(option) => option.id" @search="(search, loading) =>
                             onSearchStores(search, loading)
                             ">
                         <template slot="no-options"> Escribe para buscar... </template>
@@ -256,8 +274,8 @@ defineExpose({
                     <div class="d-flex justify-content-between align-items-center">
                         <v-select :clearable="false"
                             @option:deselected="item.stock = { amount: 0, new_amount: 0, item: '', id: null };"
-                            :disabled="!store" class="col-8" label="item" v-model="item.stock" :filterable="false"
-                            :options="stocks" :reduce="(option) => option" @search="(search, loading) =>
+                            :disabled="!store || action !== 'create'" class="col-8" label="item" v-model="item.stock"
+                            :filterable="false" :options="stocks" :reduce="(option) => option" @search="(search, loading) =>
                                 onSearchStocks(search, loading)
                                 ">
                             <template slot="no-options"> Escribe para buscar... </template>
@@ -273,9 +291,9 @@ defineExpose({
                             </template>
                         </v-select>
                         <div class="col-2">
-                            <input @keyup="limitAmount($event, item, item.stock.amount)"
-                                class="form-control text-center" type="number" v-model="item.stock.new_amount"
-                                :max="item.stock.amount" />
+                            <input :disabled="finished" @keyup="limitAmount($event, item, item.stock.amount)"
+                                @keypress="isNumber($event)" class="form-control text-center" type="number"
+                                v-model="item.stock.new_amount" :max="item.stock.amount" />
                         </div>
                         <div class="col-1 text-end" v-if="stock_requests.length > 1">
                             <font-awesome-icon class="btn text-primary" @click="remove(index)" :icon="['fa', 'minus']"
@@ -289,27 +307,28 @@ defineExpose({
                     </div>
                 </div>
             </div>
-            <div v-if="canAdd" class="col-12 my-4 text-end"><button type="button" :disabled="!vaidMaterials"
-                    class="form-control btn btn-primary py-1 rounded-5" @click="addMore">Agregar otro material</button>
+            <div v-if="canAdd && action === 'create'" class="col-12 my-4 text-end"><button type="button"
+                    :disabled="!vaidMaterials" class="form-control btn btn-primary py-1 rounded-5"
+                    @click="addMore">Agregar otro material</button>
             </div>
             <hr />
             <div v-if="action !== 'create'" lass="col-12">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" v-model="finished" :true-value="true"
-                        :false-value="false" id="finished">
-                    <label class="form-check-label" for="finished">
-                        Terminado
+                    <input :disabled="finished" class="form-check-input" type="checkbox" v-model="all_material"
+                        :true-value="true" :false-value="false" id="all_material">
+                    <label class="form-check-label" for="all_material">
+                        Se regreso todo el material
                     </label>
                 </div>
             </div>
             <div class="row mx-0 px-0 justify-content-between align-materialRequests-center mt-3">
-                <div class="col-6">
+                <div :class="'col-' + (finished ? '12' : '6')">
                     <button type="button" class="btn btn-secondary w-100" @click="emit('hideModal')"
                         data-bs-dismiss="modal">
                         Cerrar
                     </button>
                 </div>
-                <div class="col-6">
+                <div class="col-6" v-if="!finished">
                     <button :disabled="!meta.valid || !vaidMaterials" type="submit" class="btn btn-primary w-100">
                         {{ btnActionLabel }}
                     </button>

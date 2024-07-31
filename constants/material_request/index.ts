@@ -1,23 +1,23 @@
 export const materialRequestIcons = [
   {
-    text: "Edición de petición de materiales",
+    text: "Devolución de material",
     icon: "edit",
     iconSize: "xl",
     iconType: "fa",
-    action: "updateItem",
+    action: "updateMaterialRequest",
   },
   {
     text: "Eliminar petición de materiales",
     icon: "trash-can",
     iconSize: "xl",
     iconType: "fa",
-    action: "destroyItem",
+    action: "destroyMaterialRequest",
   },
 ];
 export const materialRequestFields = [
   {
-    key: "id",
-    label: "Id",
+    key: "finished",
+    label: "Estatus",
     thClass: "text-center",
     tdClass: "text-center align-middle",
   },

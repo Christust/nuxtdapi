@@ -77,9 +77,9 @@ onMounted(() => (
     <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de materialRequests'" class="mb-4"
       @search="searchMaterialRequests" />
     <SharedTableHelper :fields="materialRequestFields" :records="materialRequests">
-      <template #cell(consumable)="record">
-        <font-awesome-icon icon="fa-solid fa-square-check" size="lg"
-          :class="record.consumable ? 'text-success' : 'text-body-tertiary'" />
+      <template #cell(finished)="record">
+        <font-awesome-icon v-if="record.finished" icon="fa-solid fa-square-check" size="lg" class="text-success" />
+        <font-awesome-icon v-else icon="fa-solid fa-circle-exclamation" size="lg" class="text-warning" />
       </template>
       <template #cell(unit_price)="record">
         <span v-text="formatCurrency(record.unit_price)"></span>
