@@ -4,20 +4,32 @@ export const materialRequestIcons = [
     icon: "edit",
     iconSize: "xl",
     iconType: "fa",
-    action: "updateMaterialRequest",
+    action: "update",
   },
   {
     text: "Eliminar petición de materiales",
     icon: "trash-can",
     iconSize: "xl",
     iconType: "fa",
-    action: "destroyMaterialRequest",
+    action: "destroy",
   },
 ];
+
+export function pointOptions(options: string[]) {
+  return materialRequestFields.filter((option: any) => {
+    options.includes(option.action);
+  });
+}
 export const materialRequestFields = [
   {
     key: "finished",
     label: "Estatus",
+    thClass: "text-center",
+    tdClass: "text-center align-middle",
+  },
+  {
+    key: "branch_name",
+    label: "Sucursal",
     thClass: "text-center",
     tdClass: "text-center align-middle",
   },

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 // Props
-defineProps({
+const props = defineProps({
     info: { type: Object, required: false, default: () => { } },
-    iconsRender: { type: Object, required: true },
-
+    iconsRender: { type: Array, required: true },
+    disabledActions: { type: Array, required: false, default: () => [] }
 })
 
 // Emits
@@ -15,7 +15,7 @@ const idRand = Math.floor(Math.random() * 999).toString(10)
 const myDropdownId = Math.floor(Math.random() * 999).toString(10)
 
 // Functions
-function toggle(){
+function toggle() {
     if (dropInstance) {
         dropInstance.toggle()
     }
@@ -42,6 +42,16 @@ function activeClass(option: any, info: any) {
     }
     return 'text-dark'
 }
+
+// Computed
+const iconsRenderData: any = computed(() => {
+    if (props.disabledActions.length > 0) {
+        return props.iconsRender.filter((iconRender: any) => {
+            return !props.disabledActions.includes(iconRender.action)
+        })
+    } else return props.iconsRender
+
+})
 
 // Hooks
 onMounted(() => {
@@ -71,16 +81,17 @@ onMounted(() => {
             <font-awesome-icon class="text-secondary" :icon="['fa', 'ellipsis']" size="lg" />
         </button>
         <ul class="dropdown-menu">
-            <div v-for="(option, index) in iconsRender"
+            <div v-for="(option, index) in iconsRenderData"
                 :key="'DIV' + index + option.action + Math.floor(Math.random() * 999)">
-                <li class="d-flex align-items-center justify-content-end cursor-pointer px-4"
+                <li v-if="!disabledActions.includes(option.action)"
+                    class="d-flex align-items-center justify-content-end cursor-pointer px-4"
                     :key="index + option.action + Math.floor(Math.random() * 999)"
                     @click="emit('action', option.action, info)">
                     {{ option.text }}
                     <font-awesome-icon :icon="validIcon(option)" :class="[activeClass(option, info)]"
                         class="cursor-pointer ms-3" :size="option.iconSize" />
                 </li>
-                <hr v-if="parseInt(index) < iconsRender.length - 1"
+                <hr v-if="index < iconsRenderData.length - 1"
                     :key="'HR' + index + option.action + Math.floor(Math.random() * 999)" />
             </div>
         </ul>

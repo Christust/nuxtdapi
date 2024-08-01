@@ -16,9 +16,9 @@ const stockAction = ref('create')
 const paginationHelper = ref<HTMLInputElement | any>(null)
 const searchComponent = ref<HTMLInputElement | any>(null)
 const stockModal = ref<HTMLInputElement | any>(null)
-const stores = ref([])
+const stores: any = ref([])
 const store = ref(null)
-const branches = ref([])
+const branches: any = ref([])
 const branch = ref(null)
 
 // Functions
@@ -93,10 +93,8 @@ function listStores() {
 // Hooks
 onMounted(() => {
     listBranches()
-})
-onMounted(() => (
     listStocks({})
-))
+})
 </script>
 
 <template>
@@ -144,5 +142,3 @@ onMounted(() => (
         <StockModal ref="stockModal" :stockData="stockData" :action="stockAction" @reloadStocks="listStocks({})" />
     </div>
 </template>
-
-
