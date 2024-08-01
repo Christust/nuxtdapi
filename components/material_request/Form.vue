@@ -175,12 +175,20 @@ const vaidMaterials = computed(() => {
         return false
     } else {
         for (let index = 0; index < stock_requests.value.length; index++) {
-            if (stock_requests.value[index].stock.new_amount) {
-                if (stock_requests.value[index].stock.new_amount <= 0 || stock_requests.value[index].stock.new_amount === '') {
+            if (action.value == 'create') {
+                if (stock_requests.value[index].stock.new_amount) {
+                    if (stock_requests.value[index].stock.new_amount <= 0 || stock_requests.value[index].stock.new_amount === '') {
+                        return false
+                    }
+                } else {
                     return false
                 }
             } else {
-                return false
+                if (stock_requests.value[index].stock.new_amount) {
+                    if (stock_requests.value[index].stock.new_amount < 0 || stock_requests.value[index].stock.new_amount === '') {
+                        return false
+                    }
+                }
             }
         }
     }
