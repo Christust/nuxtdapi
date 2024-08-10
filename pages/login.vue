@@ -22,7 +22,13 @@ function login() {
 
 <template>
   <div class="loginPage">
-    <form @submit.prevent="login" class="card shadow col-6 p-5">
+    <form @submit.prevent="login" class="card shadow col-5 p-5">
+      <div class="d-flex align-items-center justify-content-center mb-4">
+        <font-awesome-icon icon="fa-solid fa-microchip" class="me-2" size="2xl" />
+        <div class="text-start">
+          <h3 class="m-0">DAPI</h3>
+        </div>
+      </div>
       <div class="mb-3">
         <label class="form-label" htmlFor="email"> Usuario </label>
         <input v-model="email" class="form-control" name="email" />
@@ -35,5 +41,3 @@ function login() {
     </form>
   </div>
 </template>
-
-

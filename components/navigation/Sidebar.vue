@@ -4,6 +4,7 @@ import authService from "~/api/factories/auth";
 
 // Stores
 const authStore = useAuthStore()
+const router: any = useRoute();
 
 // Refs
 const routes = ref(routesConstants);
@@ -22,20 +23,25 @@ function logOut() {
 <template>
   <nav class="sidebar">
     <div class="sidebar__sidebarRouteContainer">
-      <div @click="navigateTo('/')" class="sidebar__sidebarRoute">
+      <div @click="navigateTo('/')" class="d-flex align-items-center sidebar__sidebarRoute p-3"
+        style="background-color: #273238">
         <font-awesome-icon icon="fa-solid fa-microchip" class="me-3" />
-        <h4 class="text-white m-0">DAPI</h4>
+        <div class="text-center">
+          <h3 class="text-white m-0">DAPI</h3>
+        </div>
       </div>
-      <hr />
     </div>
     <div class="d-flex flex-column">
-      <div v-for="(route, index) in routes" :key="route.name + index" class="sidebar__sidebarRouteContainer">
-        <div class="sidebar__sidebarRoute sidebar__sidebarRoute--button" @click="navigateTo(route.route)">
+      <div v-for="(route, index) in routes" :key="route.name + index"
+        class="sidebar__sidebarRouteContainer sidebar__sidebarRouteContainer--options">
+        <div class="sidebar__sidebarRoute sidebar__sidebarRoute--button"
+          :class="route.route === router.path ? 'sidebar__sidebarRoute--button__active' : ''"
+          @click="navigateTo(route.route)">
           <font-awesome-icon :icon="route.icon" class="me-3" />
           <span v-text="route.name"></span>
         </div>
       </div>
-      <div class="sidebar__sidebarRouteContainer">
+      <div class="sidebar__sidebarRouteContainer sidebar__sidebarRouteContainer--options">
         <div @click="logOut" class="sidebar__sidebarRoute sidebar__sidebarRoute--button">
           <font-awesome-icon icon="fa-solid fa-door-open" class="me-3" />
           <span>Salir</span>

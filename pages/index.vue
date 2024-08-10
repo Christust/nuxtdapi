@@ -1,23 +1,4 @@
 <script setup lang="ts">
-const frontendTecnologies = ref([
-  "Nextjs - React",
-  "Redux",
-  "Bootstrap",
-  "Axios",
-  "Yup",
-  "Formik",
-  "Fontawesome",
-  "Authgrads",
-]);
-const backendTecnologies = ref([
-  "Django",
-  "DjangoRestFramework",
-  "SimpleJWT",
-  "Swagger",
-  "Sistema de autenticación",
-  "CRUDs completos",
-]);
-
 const options = ref({
   chart: {
     id: 'vuechart-example'
@@ -41,47 +22,13 @@ function showAction() {
 
 <template>
   <div>
-    <main>
-      <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
-      <apexchart width="500" type="line" :options="options" :series="series"></apexchart>
-      <div>
-        <p>
-          Este proyecto fue construido con la intención de que sirviera de
-          practica para la implementación de diferentes tecnologias y
-          herramientas de una forma concentrada.
-        </p>
-        <div class="d-flex justify-content-around my-5">
-          <div class="card cardGradient shadow p-3 col-5">
-            <div class="card-body">
-              <h5 class="card-title">Frontend</h5>
-              <p class="card-text">
-                Para el frontend hasta el momento se esta utilizando lo
-                siguiente:
-              </p>
-              <ul>
-                <li v-for="(tecnologie, index) in frontendTecnologies" :key="tecnologie + index" v-text="tecnologie">
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="card cardGradient shadow p-3 col-5">
-            <div class="card-body">
-              <h5 class="card-title">Backend</h5>
-              <p class="card-text">
-                Para el backend hasta el momento se esta utilizando lo
-                siguiente:
-              </p>
-              <ul>
-                <li v-for="(tecnologie, index) in backendTecnologies" :key="tecnologie + index" v-text="tecnologie">
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+    <main class="row justify-content-around align-items-center">
+      <div class="col-5 card justify-content-center text-center p-3">
+        <apexchart width="400" type="bar" :options="options" :series="series"></apexchart>
+      </div>
+      <div class="col-5 card justify-content-center text-center p-3">
+        <apexchart width="400" type="line" :options="options" :series="series"></apexchart>
       </div>
     </main>
   </div>
 </template>
-
-

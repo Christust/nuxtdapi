@@ -11,7 +11,7 @@ authService.logout = function logout(payload) {
 };
 
 authService.refreshToken = function refreshToken(payload) {
-  return instance.post("api/token/refresh/", payload);
+  return instance.post("token/refresh/", payload);
 };
 
 export default authService;

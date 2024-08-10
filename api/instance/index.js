@@ -36,21 +36,29 @@ instance.interceptors.response.use(
       useLoader.setLoader(-1);
     }, 500)
     if (error.response.data.code === 'token_not_valid') {
-      const payload = {
-        refresh_token: authStore.refresh_token
+      if (error.config.url === 'token/refresh/') return Promise.reject(error)
+      // Refresh
+      if (authStore.refresh_flag) {
+        authStore.deactivateRefresh()
+        authService.refreshToken({
+          refresh: authStore.refresh_token
+        }).then((res) => {
+          authStore.refresh(res)
+          authStore.activateRefresh()
+          location.reload()
+        }).catch(() => {
+          authStore.logout()
+          authStore.activateRefresh()
+        })
       }
-      authService.logout(payload).then(() => {
-        authStore.logout()
-      })
-      return error
+      return Promise.reject(error)
     }
     if (error.code == "ERR_NETWORK") {
       swal({ icon: "error", title: "Error de conexión", text: "No se pudo establecer conexión con el servidor" });
-      return error;
     } else {
       swal({ icon: "error", title: "Error", text: error.response.data.error });
     }
-    return error;
+    return Promise.reject(error);
   }
 );
 

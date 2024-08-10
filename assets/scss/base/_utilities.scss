@@ -3,9 +3,31 @@
   text-justify: inter-word;
 }
 
+.btn-primary {
+  background-color: $color-primary !important;
+  border: 1px solid $color-primary !important;
+  color: $color-white;
+  &:hover {
+    background-color: lighten($color-primary, 20%) !important;
+    border: 1px solid $color-primary !important;
+    color: $color-white;
+  }
+}
+
+.btn-secondary {
+  background-color: $color-secondary !important;
+  border: 1px solid $color-secondary !important;
+  color: $color-primary !important;
+  &:hover {
+    background-color: darken($color-secondary, 5%) !important;
+    border: 1px solid $color-secondary !important;
+    color: $color-primary !important;
+  }
+}
+
 .cardGradient {
   background-image: linear-gradient($color-primary-light, $color-primary-dark);
-  color: $silver-200;
+  color: $color-secondary-dark;
   border: none;
 
   .card-title {
@@ -14,7 +36,7 @@
 
   p,
   li {
-    color: $silver-200;
+    color: $color-secondary-dark;
   }
 }
 
@@ -88,7 +110,7 @@
 
   input {
     background: white;
-    border: solid 1px $silver-200 !important;
+    border: solid 1px $color-secondary-dark !important;
     transition: none !important;
   }
 
@@ -113,7 +135,7 @@
 }
 
 .patientsHeadClass {
-  background-color: $silver-200;
+  background-color: $color-secondary-dark;
   border-radius: 8px 8px;
   box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.75);
@@ -127,7 +149,7 @@
       th {
         text-align: center;
         font-size: 1rem;
-        color: $silver-950 !important;
+        color: $color-secondary-dark !important;
         padding: 1.5rem 0.5rem;
       }
 
@@ -184,4 +206,10 @@
       }
     }
   }
+}
+
+.vue-apexcharts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

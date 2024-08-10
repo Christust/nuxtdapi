@@ -5,6 +5,7 @@ export const useAuthStore = defineStore("auth", {
     token: ref(false),
     refresh_token: ref(false),
     current_user: ref({}),
+    refresh_flag: ref(true),
   }),
   getters: {
     isLoggedIn() {
@@ -25,6 +26,19 @@ export const useAuthStore = defineStore("auth", {
       this.$reset();
       navigateTo("/login");
     },
+    refresh(response) {
+      if (response.data?.access) {
+        console.log('Refresh store');
+        this.token = response.data.access;
+        this.refresh_token = response.data.refresh;
+      }
+    },
+    activateRefresh() {
+      this.refresh_flag = true
+    },
+    deactivateRefresh() {
+      this.refresh_flag = false
+    }
   },
   persist: true,
 });

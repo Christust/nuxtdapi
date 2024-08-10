@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import routesConstants from "@/constants/routesConstants";
 const routes = ref(routesConstants);
-const router = useRoute();
+const router: any = useRoute();
 const loader = useLoaderStore()
 
 function routeLabel(route: string) {
@@ -18,10 +18,9 @@ function routeLabel(route: string) {
   <div class="d-flex">
     <NavigationSidebar />
     <div class="sideMainContainer mainContainer">
-      <header>
-        <h3 v-text="routes.filter((route: any) => route.route === router.path)[0]?.name
+      <header class="d-flex align-items-center p-3" style="background-color: #ced7dc">
+        <h3 class="ms-3 mb-0 text-black" v-text="routes.filter((route: any) => route.route === router.path)[0]?.name
           || routeLabel(router.name)"></h3>
-        <hr />
       </header>
       <main class="mainContent">
         <slot />
@@ -31,5 +30,3 @@ function routeLabel(route: string) {
     </div>
   </div>
 </template>
-
-
