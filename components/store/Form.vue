@@ -5,6 +5,9 @@ import { es } from 'yup-locales'
 import branchService from '~/api/factories/branch';
 setLocale(es)
 
+// Stores
+const branchStore = useBranchStore()
+
 // Props
 const props = defineProps({
     storeData: { type: Object, required: false, default: () => { } },
@@ -47,7 +50,7 @@ function generatePayload() {
 function onShown() {
     if (action.value === 'create') {
         name.value = ""
-        branch.value = ""
+        branch.value = branchStore.branchValue
     }
     if (action.value !== 'create' && props.storeData) {
         name.value = props.storeData.name
@@ -84,7 +87,8 @@ defineExpose({
             <div class="col-12">
                 <div class="mb-3">
                     <label for="branch" class="form-label">Sucursal</label>
-                    <select class="form-select" v-model="branch">
+                    {{ branch }}
+                    <select :disabled="branchStore.branchValue" class="form-select" v-model="branch">
                         <option v-for="branchItem in branches" :key="branchItem.id + branchItem.name + 'COUNTRY'"
                             :value="branchItem.id" v-text="branchItem.name"></option>
                     </select>

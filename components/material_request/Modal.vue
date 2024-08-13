@@ -1,5 +1,6 @@
 <script setup>
 import materialRequestService from '~/api/factories/material_request';
+
 // Props
 const props = defineProps({
     materialRequestData: { type: Object, required: false, default: () => { } },
@@ -57,7 +58,16 @@ function destroy(id) {
 
 // Computed
 const modalTitle = computed(() => {
-    return props.action === 'create' ? 'Crear nuevo petición de material' : 'Editar petición de material'
+    switch (props.action) {
+        case "create":
+            return "Crear nuevo petición de material"
+        case "update":
+            return "Editar petición de material"
+        case "show":
+            return "Petición de material"
+        default:
+            return "Petición de material"
+    }
 })
 const btnActionLabel = computed(() => {
     return props.action === 'create' ? 'Crear' : 'Actualizar'
@@ -70,12 +80,12 @@ defineExpose({
 })
 </script>
 <template>
-    <SharedGeneralModal ref="materialRequestModalRef" @shown="onShown" :title="modalTitle" size="md" modalContentClass="p-4"
-        hideHeaderClose hideFooter noCloseOnEsc>
+    <SharedGeneralModal ref="materialRequestModalRef" @shown="onShown" :title="modalTitle" size="md"
+        modalContentClass="p-4" hideHeaderClose hideFooter noCloseOnEsc>
         <template #bodyContent>
-            <MaterialRequestForm v-if="props.action !== 'destroy'" ref="materialRequestFormRef" :materialRequestData="materialRequestData"
-                :action="props.action" :btnActionLabel="btnActionLabel" @actionSubmit="actionSubmit"
-                @cancelForm="hideModal" />
+            <MaterialRequestForm v-if="props.action !== 'destroy'" ref="materialRequestFormRef"
+                :materialRequestData="materialRequestData" :action="props.action" :btnActionLabel="btnActionLabel"
+                @actionSubmit="actionSubmit" @cancelForm="hideModal" />
             <template v-else>
                 <form @submit.prevent="destroy(materialRequestData.id)">
                     <div class="row">

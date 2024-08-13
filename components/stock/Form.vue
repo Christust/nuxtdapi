@@ -7,6 +7,9 @@ import itemService from '~/api/factories/item';
 import branchService from '~/api/factories/branch';
 setLocale(es)
 
+// Stores
+const branchStore = useBranchStore()
+
 // Props
 const props = defineProps({
     stockData: { type: Object, required: false, default: () => { } },
@@ -37,8 +40,8 @@ const { defineField, errors, handleSubmit, meta } = useForm({
 });
 
 // Refs
-const [store] = defineField('store')
 const [branch] = defineField('branch')
+const [store] = defineField('store')
 const [item] = defineField('item')
 const [amount] = defineField('amount')
 const stores = ref([])
@@ -58,7 +61,7 @@ function generatePayload() {
 }
 function onShown() {
     if (action.value === 'create') {
-        branch.value = ""
+        branch.value = branchStore.branchValue
         store.value = ""
         item.value = ""
         amount.value = ""
@@ -137,7 +140,7 @@ function onSearchBranches(search, loading) {
 }
 
 // Hooks
-watch(branch, ()=>{
+watch(branch, () => {
     listStores({})
 })
 onMounted(() => {
@@ -156,7 +159,7 @@ defineExpose({
             <div class="col-12">
                 <div class="mb-3">
                     <label for="store" class="form-label">Sucursal</label>
-                    <v-select label="name" v-model="branch" :filterable="false"
+                    <v-select :disabled="branchStore.branchValue" label="name" v-model="branch" :filterable="false"
                         :options="branches" :reduce="(option) => option.id" @search="(search, loading) =>
                             onSearchBranches(search, loading)
                             ">

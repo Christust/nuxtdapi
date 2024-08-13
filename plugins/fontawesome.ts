@@ -35,6 +35,7 @@ const fasIcons: IconDefinition[] = [
   fas.faCircleXmark,
   fas.faCircleExclamation,
   fas.faCircleCheck,
+  fas.faEye,
 ];
 const farIcons: IconDefinition[] = [far.faSquareCheck];
 const fabIcons: IconDefinition[] = [];

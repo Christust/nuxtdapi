@@ -7,6 +7,13 @@ export const materialRequestIcons = [
     action: "update",
   },
   {
+    text: "Mostrar petición",
+    icon: "eye",
+    iconSize: "xl",
+    iconType: "fa",
+    action: "show",
+  },
+  {
     text: "Eliminar petición de materiales",
     icon: "trash-can",
     iconSize: "xl",

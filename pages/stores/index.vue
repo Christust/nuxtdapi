@@ -5,6 +5,7 @@ import { storeFields, storeIcons } from '~/constants/store';
 
 // Stores
 const searchStore = useSearchStore()
+const branchStore = useBranchStore()
 
 // Refs
 const stores = ref()
@@ -13,8 +14,6 @@ const total = ref(0)
 const limit = ref(5)
 const activePage = ref(1)
 const storeAction = ref('create')
-const branches = ref([])
-const branch = ref(null)
 const paginationHelper = ref<HTMLInputElement | any>(null)
 const searchComponent = ref<HTMLInputElement | any>(null)
 const storeModal = ref<HTMLInputElement | any>(null)
@@ -66,18 +65,18 @@ function changePage(page: number) {
 function searchStores() {
   listStores({ page: 1 })
 }
-function listBranches() {
-  const payload = {
-    unlimit: true
-  }
-  branchService.list(payload).then((res) => {
-    branches.value = res.data.branches
-  })
-}
+
+// Computed
+const branch = computed({
+  get: () => branchStore.branchValue,
+  set: (val) => branchStore.updateBranch(val)
+})
 
 // Hooks
 onMounted(() => {
-  listBranches()
+  listStores({})
+})
+watch(branch, () => {
   listStores({})
 })
 </script>
@@ -90,14 +89,6 @@ onMounted(() => {
     <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de almacenes'" class="mb-4"
       @search="searchStores">
       <template #extraElements>
-        <div class="col-2 ms-2">
-          <label class="form-label">Sucursal</label>
-          <select @change="listStores" class="form-select" v-model="branch">
-            <option :value="null" selected>Todas</option>
-            <option v-for="branchItem in branches" :key="branchItem.id + branchItem.name + 'STORE'"
-              :value="branchItem.id" v-text="branchItem.name"></option>
-          </select>
-        </div>
       </template>
     </SharedSearchHelper>
     <SharedTableHelper :fields="storeFields" :records="stores">
@@ -113,5 +104,3 @@ onMounted(() => {
     <StoreModal ref="storeModal" :storeData="storeData" :action="storeAction" @reloadStores="listStores({})" />
   </div>
 </template>
-
-

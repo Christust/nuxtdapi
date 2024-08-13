@@ -3,8 +3,10 @@ import stockService from '~/api/factories/stock';
 import { stockFields, stockIcons } from '~/constants/stock';
 import storeService from '~/api/factories/store';
 import branchService from '~/api/factories/branch';
+
 // Stores
 const searchStore = useSearchStore()
+const branchStore = useBranchStore()
 
 // Refs
 const stocks = ref()
@@ -18,8 +20,6 @@ const searchComponent = ref<HTMLInputElement | any>(null)
 const stockModal = ref<HTMLInputElement | any>(null)
 const stores: any = ref([])
 const store = ref(null)
-const branches: any = ref([])
-const branch = ref(null)
 
 // Functions
 function listStocks({ page = 0, search = null }) {
@@ -69,14 +69,6 @@ function changePage(page: number) {
 function searchStocks() {
     listStocks({ page: 1 })
 }
-function listBranches() {
-    const payload = {
-        unlimit: true
-    }
-    branchService.list(payload).then((res) => {
-        branches.value = res.data.branches
-    })
-}
 function listStores() {
     store.value = null
     const payload = {
@@ -90,10 +82,18 @@ function listStores() {
 
 }
 
+// Computed
+const branch = computed({
+    get: () => branchStore.branchValue,
+    set: (val) => branchStore.updateBranch(val)
+})
+
 // Hooks
 onMounted(() => {
-    listBranches()
     listStocks({})
+})
+watch(branch, () => {
+    listStores()
 })
 </script>
 
@@ -105,14 +105,6 @@ onMounted(() => {
         <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de existencias'" class="mb-4"
             @search="searchStocks">
             <template #extraElements>
-                <div class="col-2 ms-2">
-                    <label class="form-label">Sucursal</label>
-                    <select @change="listStores" class="form-select" v-model="branch">
-                        <option :value="null" selected>Todas</option>
-                        <option v-for="branchItem in branches" :key="branchItem.id + branchItem.name + 'STORE'"
-                            :value="branchItem.id" v-text="branchItem.name"></option>
-                    </select>
-                </div>
                 <div class="col-2 ms-2">
                     <label class="form-label">Almacen</label>
                     <select @change="listStocks({})" class="form-select" v-model="store">

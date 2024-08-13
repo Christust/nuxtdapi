@@ -5,6 +5,7 @@ import storeService from '~/api/factories/store';
 import { materialRequestFields, materialRequestIcons } from '~/constants/material_request';
 
 // Stores
+const branchStore = useBranchStore()
 const searchStore = useSearchStore()
 
 // Refs
@@ -14,7 +15,6 @@ const total = ref(0)
 const limit = ref(5)
 const finished = ref(false)
 const activePage = ref(1)
-const branch = ref(null)
 const branches: any = ref([])
 const store = ref(null)
 const stores: any = ref([])
@@ -49,6 +49,13 @@ function update(info: any) {
   materialRequestData.value = info
   materialRequestModal.value.showModal()
 }
+function show(info: any) {
+  materialRequestAction.value = 'show'
+  materialRequestService.show(info.id).then((res) => {
+    materialRequestData.value = res.data.material_request
+  })
+  materialRequestModal.value.showModal()
+}
 function destroy(info: any) {
   materialRequestAction.value = 'destroy'
   materialRequestData.value = info
@@ -58,6 +65,9 @@ function actionPoint(actionPoint: string, info: any) {
   switch (actionPoint) {
     case 'update':
       update(info)
+      return
+    case 'show':
+      show(info)
       return
     case 'destroy':
       destroy(info)
@@ -96,10 +106,20 @@ function listStores() {
 
 }
 
+// Computed
+const branch = computed({
+  get: () => branchStore.branchValue,
+  set: (val) => branchStore.updateBranch(val)
+})
+
 // Hooks
 onMounted(() => {
   list({})
   listBranches()
+})
+watch(branch, () => {
+  listStores()
+  searchMaterialRequests()
 })
 </script>
 
@@ -112,14 +132,6 @@ onMounted(() => {
     <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de materialRequests'" class="mb-4"
       @search="searchMaterialRequests">
       <template #extraElements>
-        <div class="col-2 ms-2">
-          <label class="form-label">Sucursal</label>
-          <select @change="listStores(); searchMaterialRequests();" class="form-select" v-model="branch">
-            <option :value="null" selected>Todas</option>
-            <option v-for="branchItem in branches" :key="branchItem.id + branchItem.name + 'STORE'"
-              :value="branchItem.id" v-text="branchItem.name"></option>
-          </select>
-        </div>
         <div class="col-2 ms-2">
           <label class="form-label">Almacen</label>
           <select @change="searchMaterialRequests()" class="form-select" v-model="store">
