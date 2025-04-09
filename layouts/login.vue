@@ -1,8 +1,11 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const counter = useCounterStore();
+</script>
 
 <template>
-  <div>
+  <div class="login">
     <slot />
+    <SharedLoader v-if="counter.getCounter > 0" />
   </div>
 </template>
 

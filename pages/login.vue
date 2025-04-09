@@ -21,7 +21,7 @@ function login() {
 </script>
 
 <template>
-  <div class="loginPage">
+  <div class="login__page">
     <div class="card shadow col-6 p-5">
       <div class="mb-3">
         <label class="form-label" htmlFor="email"> Usuario </label>

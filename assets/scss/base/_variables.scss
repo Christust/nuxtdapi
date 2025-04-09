@@ -1,9 +1,9 @@
 // COLORS
-$color-primary: #7b7b7b;
+$color-primary: #4c4e54;
 $color-primary-light: #adadad;
 $color-primary-dark: #545454;
 
-$color-secondary: #f6f6f6;
+$color-secondary: #9899a2;
 $color-secondary-light: lighten($color-secondary, 10%);
 $color-secondary-dark: darken($color-secondary, 10%);
 
@@ -15,20 +15,20 @@ $color-success: #21ba45;
 $color-warning: #fbbd08;
 $color-info: #767676;
 
-$silver-50: #f7f7f7;
-$silver-100: #ededed;
-$silver-200: #dfdfdf;
-$silver-300: #bbbbbb;
-$silver-500: #999999;
-$silver-600: #888888;
-$silver-800: #676767;
-$silver-950: #363636;
-
-$color-titles-and-texts: #6a6e83;
-$background: #f8f9fd;
+$background: #f5f7f9;
 
 // FONT
 $default-title-size: 14px;
 $default-font-size: 12px;
-$default-primary-font: Poppins;
-$default-secondary-font: Poppins;
+$default-primary-font: "Quicksand", sans-serif;
+$default-secondary-font: "Atkinson Hyperlegible Next", sans-serif;
+
+// [9:39 p.m., 26/3/2025] Christos: base #f5f7f9
+// [9:39 p.m., 26/3/2025] Christos: card #ffffff
+// [9:39 p.m., 26/3/2025] Christos: primary #4c4e54
+// [9:39 p.m., 26/3/2025] Christos: secondary icon #999aa3
+// [9:39 p.m., 26/3/2025] Christos: secondary #4f525e
+// [10:26 p.m., 26/3/2025] Christos: inputs inter #ebedee
+// [10:26 p.m., 26/3/2025] Christos: icon input #92949a
+// [10:26 p.m., 26/3/2025] Christos: primary text #424349
+// [10:26 p.m., 26/3/2025] Christos: https://dribbble.com/shots/24455638-Financial-Dashboard

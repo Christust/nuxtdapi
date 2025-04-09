@@ -1,11 +1,17 @@
-.loginPage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  animation-name: loginPage;
-  animation-duration: 2s;
-  animation-fill-mode: forwards;
+.login {
+  background-image: url("./background.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  &__page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    animation-name: loginPage;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+  }
 }
 
 @keyframes loginPage {

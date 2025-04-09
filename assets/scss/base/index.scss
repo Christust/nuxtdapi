@@ -3,35 +3,19 @@
 
 body {
   box-sizing: border-box !important;
+  background-color: $background;
+  font-family: $default-primary-font;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  font-size: $default-font-size;
 }
-
-label,
-select,
-p,
-input,
-button,
-span,
-div,
-a,
-textarea {
-  font-size: $default-font-size !important;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-input,
-select,
-li,
-label,
-p,
-textarea {
-  color: $color-titles-and-texts;
+:is(h1, h2, h3, h4, h5, h6, label) {
+  color: $color-primary-dark;
 }
 
 p {
+  text-align: justify;
   text-justify: inter-word;
+  color: $color-primary;
 }

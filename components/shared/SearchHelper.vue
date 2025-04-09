@@ -34,8 +34,8 @@ function emptyText() {
 
 <template>
   <div class="d-flex mb-2" :class="aditionalMainClass">
-    <div :class="stringClassByRules" class="input-search layoutContainer">
-      <input :class="'input-search form-control border-end-0 border ' + aditionalInputClass" type="search"
+    <div :class="stringClassByRules" class="" style="position: relative !important;">
+      <input :class="'form-control ' + aditionalInputClass" type="search"
         v-model="searchValue" @change="emptyText" @keyup.enter="emit('search', $event.target.value)"
         :placeholder="placeholder" id="example-search-input" />
       <button class="clear-icon" type="button" @click="clearSearch" v-if="searchValue">
@@ -45,3 +45,8 @@ function emptyText() {
     <slot name="extraElements"></slot>
   </div>
 </template>
+<style lang="css">
+.layoutCointainer {
+  position: relative !important;
+}
+</style>
