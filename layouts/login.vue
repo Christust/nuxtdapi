@@ -3,7 +3,7 @@ const loader = useLoaderStore();
 </script>
 
 <template>
-  <div class="login">
+  <div class="login ">
     <slot />
     <SharedLoader v-if="loader.getLoader > 0" />
   </div>
