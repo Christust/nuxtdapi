@@ -1,4 +1,10 @@
-const routes = [
+export type Route = {
+    route: string,
+    name: string,
+    icon: string,
+};
+
+export const routes : Route[] = [
   {
     route: "/",
     name: "Inicio",
@@ -30,5 +36,3 @@ const routes = [
     icon: "fa-solid fa-box",
   },
 ];
-
-export default routes;
