@@ -38,7 +38,7 @@ const searchValue = computed({
 </script>
 
 <template>
-  <div class="d-flex mb-2" :class="aditionalMainClass">
+  <div class="d-flex mb-2 align-items-end" :class="aditionalMainClass">
     <div :class="stringClassByRules" class="" style="position: relative !important;">
       <input :class="'form-control ' + aditionalInputClass" type="search"
         v-model="searchValue" @change="emptyText" @keyup.enter="emit('search', $event.target.value)"

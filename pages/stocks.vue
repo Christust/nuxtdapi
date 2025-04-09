@@ -105,7 +105,7 @@ watch(branch, () => {
         <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de existencias'" class="mb-4"
             @search="searchStocks">
             <template #extraElements>
-                <div class="col-2 ms-2">
+                <div class="col-3 ms-2">
                     <label class="form-label">Almacen</label>
                     <select @change="listStocks({})" class="form-select" v-model="store">
                         <option :value="null" selected>Todos</option>

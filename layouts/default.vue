@@ -46,22 +46,24 @@ onMounted(() => {
     <div class="main">
       <div class="card--custom">
         <header>
-          <h3
-            class="px-4 pt-3"
-            v-text="routesConstants.filter((route: any) => route.route === router.path)[0]?.name
-            || routeLabel(router.name)"
-          ></h3>
-          <div class="row me-3 pt-2">
-            <label class="ps-0 form-label">Sucursal</label>
-            <select class="form-select" v-model="branch">
-              <option :value="null" selected>Todas</option>
-              <option
-                v-for="branchItem in branches"
-                :key="branchItem.id + branchItem.name + 'COUNTRYHEADER'"
-                :value="branchItem.id"
-                v-text="branchItem.name"
-              ></option>
-            </select>
+          <div class="d-flex align-items-center justify-content-between">
+            <h3
+              class="px-4 pt-3 mb-0 col"
+              v-text="routesConstants.filter((route: any) => route.route === router.path)[0]?.name
+              || routeLabel(router.name)"
+            ></h3>
+            <div class="pt-3 d-flex me-3 col-2 justify-content-end align-items-center">
+              <label class="ps-0 mb-0 me-2">Sucursal</label>
+              <select class="form-select form-select-sm" v-model="branch">
+                <option :value="null" selected>Todas</option>
+                <option
+                  v-for="branchItem in branches"
+                  :key="branchItem.id + branchItem.name + 'COUNTRYHEADER'"
+                  :value="branchItem.id"
+                  v-text="branchItem.name"
+                ></option>
+              </select>
+            </div>
           </div>
           <hr />
         </header>

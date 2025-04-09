@@ -129,7 +129,7 @@ watch(branch, () => {
         MaterialRequest</button></div>
   </div>
   <div class="card rounded-4 p-4 shadow">
-    <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de materialRequests'" class="mb-4"
+    <SharedSearchHelper ref="searchComponent" :colValue="3" :placeholder="'Buscador de peticiones de material'" class="mb-4"
       @search="searchMaterialRequests">
       <template #extraElements>
         <div class="col-2 ms-2">
@@ -140,7 +140,7 @@ watch(branch, () => {
               v-text="storeItem.name"></option>
           </select>
         </div>
-        <div class="col-3">
+        <div class="col-3 ms-3">
           <div class="form-check form-switch">
             <input @change="searchMaterialRequests" class="form-check-input" type="checkbox" role="switch"
               v-model="finished" :true-value="true" :false-value="false" id="finished">

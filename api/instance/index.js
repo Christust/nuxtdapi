@@ -4,10 +4,10 @@ import authService from "../factories/auth";
 import { useLoaderStore } from "@/stores/loader";
 import { useAuthStore } from "@/stores/auth";
 
-const config = useRuntimeConfig()
+const config = useRuntimeConfig();
 
 const instance = axios.create({
-  baseURL: config.public.backend_url,
+  baseURL: "https://moderatorem.pythonanywhere.com/",
   timeout: 5000,
 });
 
@@ -26,7 +26,7 @@ instance.interceptors.response.use(
     const useLoader = useLoaderStore();
     setTimeout(() => {
       useLoader.setLoader(-1);
-    }, 500)
+    }, 500);
     return res;
   },
   (error) => {
@@ -34,27 +34,34 @@ instance.interceptors.response.use(
     const authStore = useAuthStore();
     setTimeout(() => {
       useLoader.setLoader(-1);
-    }, 500)
-    if (error.response.data.code === 'token_not_valid') {
-      if (error.config.url === 'token/refresh/') return Promise.reject(error)
+    }, 500);
+    if (error.response.data.code === "token_not_valid") {
+      if (error.config.url === "token/refresh/") return Promise.reject(error);
       // Refresh
       if (authStore.refresh_flag) {
-        authStore.deactivateRefresh()
-        authService.refreshToken({
-          refresh: authStore.refresh_token
-        }).then((res) => {
-          authStore.refresh(res)
-          authStore.activateRefresh()
-          location.reload()
-        }).catch(() => {
-          authStore.logout()
-          authStore.activateRefresh()
-        })
+        authStore.deactivateRefresh();
+        authService
+          .refreshToken({
+            refresh: authStore.refresh_token,
+          })
+          .then((res) => {
+            authStore.refresh(res);
+            authStore.activateRefresh();
+            location.reload();
+          })
+          .catch(() => {
+            authStore.logout();
+            authStore.activateRefresh();
+          });
       }
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
     if (error.code == "ERR_NETWORK") {
-      swal({ icon: "error", title: "Error de conexión", text: "No se pudo establecer conexión con el servidor" });
+      swal({
+        icon: "error",
+        title: "Error de conexión",
+        text: "No se pudo establecer conexión con el servidor",
+      });
     } else {
       swal({ icon: "error", title: "Error", text: error.response.data.error });
     }

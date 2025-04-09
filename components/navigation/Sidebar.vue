@@ -92,5 +92,5 @@ onMounted(async () => {
         ></div>
       </div>
     </div>
-  </nav> -->
+  </nav>
 </template>
